@@ -1,33 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../navbar/NavBar.css">
 </head>
+
 <body>
-    <div class="container">
-        <header>
+    <body>    
+        <div class="container">
             <nav>
-                <div class="logo">
-                    Legend Motor
+                <div class="wrapper">
+                    <div class="logo"><a href="#">Legend Motor</a></div>
+                    <input type="radio" name="slider" id="menu-btn">
+                    <input type="radio" name="slider" id="close-btn">
+                    <ul class="nav-links">
+                        <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li>
+                            <a href="#" class="desktop-item">Dropdown Menu</a>
+                            <input type="checkbox" id="showDrop">
+                            <label for="showDrop" class="mobile-item">Dropdown Menu</label>
+                            <ul class="drop-menu">
+                                <li><a href="#">Drop menu 1</a></li>
+                                <li><a href="#">Drop menu 2</a></li>
+                                <li><a href="#">Drop menu 3</a></li>
+                                <li><a href="#">Drop menu 4</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="desktop-item">Mega Menu</a>
+                            <input type="checkbox" id="showMega">
+                            <label for="showMega" class="mobile-item">Mega Menu</label>
+                            <div class="mega-box">
+                                <div class="content">
+                                    <div class="row">
+                                        <img src="https://fadzrinmadu.github.io/hosted-assets/responsive-mega-menu-and-dropdown-menu-using-only-html-and-css/img.jpg"
+                                            alt="">
+                                    </div>
+                                    <div class="row">
+                                        <header>Design Services</header>
+                                        <ul class="mega-links">
+                                            <li><a href="#">Graphics</a></li>
+                                            <li><a href="#">Vectors</a></li>
+                                            <li><a href="#">Business cards</a></li>
+                                            <li><a href="#">Custom logo</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <header>Email Services</header>
+                                        <ul class="mega-links">
+                                            <li><a href="#">Personal Email</a></li>
+                                            <li><a href="#">Business Email</a></li>
+                                            <li><a href="#">Mobile Email</a></li>
+                                            <li><a href="#">Web Marketing</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <header>Security services</header>
+                                        <ul class="mega-links">
+                                            <li><a href="#">Site Seal</a></li>
+                                            <li><a href="#">VPS Hosting</a></li>
+                                            <li><a href="#">Privacy Seal</a></li>
+                                            <li><a href="#">Website design</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                    <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
                 </div>
             </nav>
-        </header>
-
-        <div id="fstCar">
-            <img id="img1" src="./src/img1.png" alt="Background Image 1">
+    
+            <div id="fstCar">
+                <img id="img1" src="./src/img1.png" alt="Background Image 1">
+            </div>
+    
+            <div id="secCar">
+                <img id="img2" src="./src/img2.png" alt="Background Image 2">
+            </div>
+    
+            <div id="thirdCar"> <!-- 修正為 "thirdCar" -->
+                <img id="img3" src="./src/img3.png" alt="Background Image 3">
+            </div>
         </div>
-
-        <div id="secCar">
-            <img id="img2" src="./src/img2.png" alt="Background Image 2">
-        </div>
-    </div>
+    </body>
+    
 
     <script src="./index.js"></script>
 </body>
+
 </html>
