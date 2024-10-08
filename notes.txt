@@ -1,0 +1,23 @@
+For Customers:
+
+Online Vehicle Purchase Platform:
+Provide an online platform where customers can browse the available vehicles.
+Allow customers to customize vehicle options (e.g., color, features).
+Enable customers to submit purchase requests directly through the platform.
+
+Purchase Management:
+Offer a feature where customers can access their purchase history.
+Enable customers to view detailed information about their previous vehicle purchases.
+Allow customers to manage their purchases, including tracking payment statuses and delivery updates.
+
+
+For Vehicle Sales Personnel:
+
+Customer Inquiry Management:
+Provide a system that clearly and accurately communicates customer inquiries to sales personnel.
+Ensure that inquiries are handled efficiently, enabling timely responses and follow-up.
+
+Purchase Handling:
+Provide real-time updates on new vehicle purchases.
+Track payment statuses and vehicle arrival for effective sales management.
+Allow sales personnel to monitor the status of vehicle purchases and engage with customers as necessary to ensure satisfaction.
