@@ -85,6 +85,7 @@ nav .wrapper {
 }
 
 .drop-menu li a {
+  font-size: 14px;
   width: 100%;
   display: block;
   padding: 0 0 0 15px;
