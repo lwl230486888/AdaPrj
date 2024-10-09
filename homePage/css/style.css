@@ -26,6 +26,14 @@ body, html {
     transition: opacity 1s ease-in-out; /* 添加平滑過渡效果 */
     z-index: 0; /* 將元素放在最底層 */
 }
+
+#fstCarInfo {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
  
 .pages li video,
 .pages li img {
@@ -112,7 +120,7 @@ body, html {
   }
   
   .PageFooter .buttons button {
-    font-size: 13px;
+    font-size: 15px;
     padding: 7px 80px;
     border-radius: 5px;
     border: none;
