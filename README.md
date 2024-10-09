@@ -13,7 +13,3 @@ git reset <file>: 重置暂存区中的文件，保留工作目录不变。
 git stash: 暂存当前的工作目录和暂存区状态。
 git remote -v: 查看远程仓库的详细信息。
 git fetch: 从远程仓库下载对象和引用（不自动合并）。
-
-
-
-yoyoyoooooooooooooooooooooooooooooooooooooooooooo
