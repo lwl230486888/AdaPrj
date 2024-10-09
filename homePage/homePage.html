@@ -17,82 +17,98 @@
 </head>
 
 <body>
-    <body>    
-        <div class="container">
-            <nav>
-                <div class="wrapper">
-                    <div class="logo"><a href="#">Legend Motor</a></div>
-                    <input type="radio" name="slider" id="menu-btn">
-                    <input type="radio" name="slider" id="close-btn">
-                    <ul class="nav-links">
-                        <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li>
-                            <a href="#" class="desktop-item">Vehicles</a>
-                            <input type="checkbox" id="Vehicles">
-                            <label for="showDrop" class="mobile-item">Vehicles</label>
-                            <ul class="drop-menu">
-                                <li><a href="#">Drop menu 1</a></li>
-                                <li><a href="#">Drop menu 2</a></li>
-                                <li><a href="#">Drop menu 3</a></li>
-                                <li><a href="#">Drop menu 4</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#" class="desktop-item">Insurance Services</a>
-                            <input type="checkbox" id="Insurance Services">
-                            <label for="showMega" class="mobile-item">Insurance Services</label>
-                            <div class="mega-box">
-                                <div class="content">
-                                    <div class="row">
-                                        <img src="./src/img4.png"
-                                            alt="">
-                                    </div>
-
-                                    <div class="row">
-                                        <header>Insurance Quotation Request</header>
-                                        <ul class="mega-links">
-                                            <li><a href="#">Comprehensive Insurance</a></li>
-                                            <li><a href="#">Third-party Insurance</a></li>
-                                            <li><a href="#">Liability Insurance</a></li>
-                                            
-                                        </ul>
-                                    </div>
-                                    <div class="row">
-                                        <header>Quotation Overview</header>
-                                        <ul class="mega-links">
-                                            <li><a href="#">View All Quotes</a></li>
-                                            <li><a href="#">Policy Terms and Conditions</a></li>
-                                            <li><a href="#">FAQs</a></li>
-                                            <li><a href="#">Website design</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li><a href="#">Feedback</a></li>
+    <nav>
+        <div class="wrapper">
+            <div class="logo"><a href="#">Legend Motor</a></div>
+            <input type="radio" name="slider" id="menu-btn">
+            <input type="radio" name="slider" id="close-btn">
+            <ul class="nav-links">
+                <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li>
+                    <a href="#" class="desktop-item">Vehicles</a>
+                    <input type="checkbox" id="Vehicles">
+                    <label for="showDrop" class="mobile-item">Vehicles</label>
+                    <ul class="drop-menu">
+                        <li><a href="#">Drop menu 1</a></li>
+                        <li><a href="#">Drop menu 2</a></li>
+                        <li><a href="#">Drop menu 3</a></li>
+                        <li><a href="#">Drop menu 4</a></li>
                     </ul>
-                    <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
-                </div>
-            </nav>
-    
-            <div id="fstCar">
-                <img id="img1" src="./src/img1.png" alt="Background Image 1">
-            </div>
-    
-            <div id="secCar">
-                <img id="img2" src="./src/img2.png" alt="Background Image 2">
-            </div>
-    
-            <div id="thirdCar"> <!-- 修正為 "thirdCar" -->
-                <img id="img3" src="./src/img3.png" alt="Background Image 3">
-            </div>
-        </div>
-    </body>
-    
+                </li>
+                <li>
+                    <a href="#" class="desktop-item">Insurance Services</a>
+                    <input type="checkbox" id="Insurance Services">
+                    <label for="showMega" class="mobile-item">Insurance Services</label>
+                    <div class="mega-box">
+                        <div class="content">
+                            <div class="row">
+                                <img src="./src/img4.png" alt="">
+                            </div>
 
+                            <div class="row">
+                                <header>Insurance Quotation Request</header>
+                                <ul class="mega-links">
+                                    <li><a href="#">Comprehensive Insurance</a></li>
+                                    <li><a href="#">Third-party Insurance</a></li>
+                                    <li><a href="#">Liability Insurance</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <header>Quotation Overview</header>
+                                <ul class="mega-links">
+                                    <li><a href="#">View All Quotes</a></li>
+                                    <li><a href="#">Policy Terms and Conditions</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                    <li><a href="#">Website design</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+            <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+        </div>
+    </nav>
+    <ul class="pages">
+        <div class="container">
+            <li>
+                <div id="fstCar">
+                    <video id="video" src="./src/aud1.mp4" autoplay muted loop></video>
+                    <div id="fstCarInfo" class="PageInfo">
+                        <h1>EcoCruise Z</h1>
+                        <p>Lease starting at $399/mo*</p>
+                    </div>
+                    <div id="fstCarFooter" class="PageFooter">
+                        <div class="buttons">
+                            <button>Order Now</button>
+                        </div>
+                        <p>
+                            *Excludes taxes and fees with price subject to change.Available in select states.
+                            <a href="#">See Details</a>
+                        </p>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div id="secCar">
+                    <img id="img2" src="./src/img2.png" alt="Background Image 2">
+                </div>
+            </li>
+
+            <li>
+                <div id="thirdCar"> <!-- 修正為 "thirdCar" -->
+                    <img id="img3" src="./src/img3.png" alt="Background Image 3">
+                </div>
+            </li>
+        </div>
+    </ul>
     <script src="./index.js"></script>
+
 </body>
 
 </html>
