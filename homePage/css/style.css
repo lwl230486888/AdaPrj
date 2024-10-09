@@ -24,15 +24,15 @@ body, html {
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0px 2px 4px rgba(100, 100, 100, 0.5);
     transition: opacity 1s ease-in-out; /* 添加平滑過渡效果 */
-    z-index: -1; /* 將元素放在最底層 */
+    z-index: 0; /* 將元素放在最底層 */
 }
  
 .pages li video,
 .pages li img {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: -100;
   object-fit: cover;
   width: 100%;
   max-width: 100%;
@@ -41,13 +41,14 @@ body, html {
 
 
 .pages {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    text-align: center;
-    flex-direction: column;
-    overflow: hidden;
-  }
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  text-align: center;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative; /* 确保 pages 是相对定位 */
+}
 
   .PageInfo {
     display: flex;
@@ -59,27 +60,28 @@ body, html {
   }
 
   .PageFooter {
-    position: absolute;
+    position: fixed; /* 或者使用 fixed，使其固定在底部 */
     bottom: 0;
     left: 0;
     width: 100%;
-    text-align: center;  /* 可选：页脚内容居中 */
-    padding: 10px 0; /* 可选：页脚内边距 */
+    text-align: center; /* 可选：页脚内容居中 */
+    padding: 50px 0; /* 可选：页脚内边距 */
+    z-index: 10; /* 确保在其他元素之上 */
 }
   
-  .pages li {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    justify-content: space-between;
-    padding-top: 150px;
-    padding-bottom: 10px;
-    color: #fff;
-    scroll-snap-align: start;
-  }
- 
+.pages li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 确保每个页面的高度足够 */
+  width: 100vw;
+  justify-content: space-between; /* 使子元素在垂直方向上分布 */
+  padding-top: 150px; /* 适当的顶部填充 */
+  padding-bottom: 10px; /* 底部填充 */
+  color: #fff;
+  scroll-snap-align: start;
+}
+
   
   
   .PageInfo h1 {
@@ -106,6 +108,7 @@ body, html {
     display: flex;
     gap: 20px;
     justify-content: center;
+    z-index: 20;
   }
   
   .PageFooter .buttons button {
@@ -114,7 +117,14 @@ body, html {
     border-radius: 5px;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease; /* 添加过渡效果 */
   }
+  
+  .PageFooter .buttons .btn2:hover {
+  background-color:#757575;
+  color: white;
+  opacity: 0.7;
+}
   
   .PageFooter .buttons button:first-child {
     background-color: rgba(34, 34, 34, 0.8);
@@ -141,10 +151,10 @@ body, html {
     color: #fff;
   }
   
-  .PageFooter .buttons.demo-drive button {
+  .PageFooter .buttons {
     background-color: transparent;
     color: #fff;
-    border: 3px solid #fff;
+    border: 0px solid #fff;
   }
 
 #secCar, #thirdCar {
