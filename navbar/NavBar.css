@@ -195,6 +195,7 @@ nav .wrapper {
 
   ::-webkit-scrollbar-thumb {
     background: #3A3B3C;
+    
   }
 
   #menu-btn:checked~.nav-links {
@@ -254,6 +255,7 @@ nav .wrapper {
 
   .nav-links .mobile-item:hover {
     background: #3A3B3C;
+    
   }
 
   .drop-menu li {

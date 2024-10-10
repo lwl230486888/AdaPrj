@@ -9,7 +9,7 @@ body, html {
 }
 
 .container {
-    min-height: 400px; /* 確保有足夠的滾動空間 */
+    min-height: 500px; /* 確保有足夠的滾動空間 */
     position: relative;
 }
 
@@ -20,7 +20,7 @@ body, html {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: auto;
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0px 2px 4px rgba(100, 100, 100, 0.5);
     transition: opacity 1s ease-in-out; /* 添加平滑過渡效果 */
@@ -44,7 +44,8 @@ body, html {
   object-fit: cover;
   width: 100%;
   max-width: 100%;
-  height: auto;
+  height: 100vh;
+  opacity: 0.85;
 }
 
 
