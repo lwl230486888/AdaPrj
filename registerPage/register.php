@@ -23,13 +23,13 @@ $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // 对密码进
 $stmt = $conn->prepare("INSERT INTO users (region, first_name, last_name, email, password) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("sssss", $region, $firstName, $lastName, $email, $password);
 
+// After successful execution of your database insert
 if ($stmt->execute()) {
-    // 弹出框 + 页面跳转
-    echo "<script type='text/javascript'>
-            alert('Account created successfully!');
-            window.location = '../loginPage/loginPage.html'; // 替换为你想跳转的页面
-          </script>";
+    echo "success"; // Send back a success message
+} else {
+    echo "Error: " . $stmt->error; // Send back an error message
 }
+
 
 $stmt->close();
 $conn->close();

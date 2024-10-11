@@ -27,7 +27,7 @@
             </nav>
         </header>
 
-        <form action="register.php" method="post" onsubmit="return validateForm()">
+        <form id="registerForm" method="post">
             <!-- list of countries -->
             <div class="form-group">
                 <h1 class="register-title">Create Account</h1>
@@ -144,7 +144,7 @@
                         <option value="Liberia">Liberia</option>
                         <option value="Libya">Libya</option>
                         <option value="Madagascar">Madagascar</option>
-                        <option value="Malawi">Malawi</option>kkk
+                        <option value="Malawi">Malawi</option>
                         <option value="Mali">Mali</option>
                         <option value="Mauritania">Mauritania</option>
                         <option value="Mauritius">Mauritius</option>
@@ -218,22 +218,56 @@
 
             <button type="submit" class="btn">Create Account</button>
         </form>
+
+        <div class="popup" id="popup1">
+            <div class="overlay"></div>
+            <div class="content">
+                <span class="close-btn" onclick="togglePopup()">×</span>
+                <h2>Popup Title</h2>
+                <p>Some content here.</p>
+                <button class="btn" onclick="doSomething()">Click Me</button>
+            </div>
+        </div>
+
         <p id="error-message" style="color: red;"></p>
 
         <script>
-            function validateForm() {
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-                const errorMessage = document.getElementById('error-message');
+            document.getElementById('registerForm').addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
 
-                if (password !== confirmPassword) {
-                    errorMessage.textContent = "Passwords do not match!";
-                    return false;  // Prevent form submission
+                const formData = new FormData(this); // Get form data
+
+                // Send AJAX request
+                fetch('register.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Assuming data contains a success message or JSON response
+                        if (data.includes('success')) {
+                            togglePopup(); // Show popup if submission is successful
+                        } else {
+                            // Handle errors, e.g., display error message
+                            document.getElementById('error-message').textContent = data; // or any error message
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+
+            function togglePopup() {
+                const popup = document.getElementById("popup1");
+                popup.classList.toggle("active");
+
+                // 控制 overlay 的显示
+                const overlay = popup.querySelector('.overlay');
+                if (popup.classList.contains("active")) {
+                    overlay.style.display = 'block'; // 显示 overlay
                 } else {
-                    errorMessage.textContent = "";  // Clear any previous error message
-                    return true;  // Allow form submission
+                    overlay.style.display = 'none'; // 隐藏 overlay
                 }
             }
+        </script>
         </script>
 
         <footer class="footer">
