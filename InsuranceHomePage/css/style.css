@@ -1,26 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
-
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    box-sizing: border-box;
-    font-family: 'ABeeZee', sans-serif;
-    display: flex; /* 使用 flexbox */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-    background-color: #f0f0f0; /* 背景顏色 */
-}
-
-.container {
+body {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    align-items: center; /* 水平居中 */
+    justify-content: flex-start; /* 從頂部開始 */
+  }
+  
+  .container {
     max-width: 1200px;
     width: 100%; /* 使容器寬度自適應 */
     padding: 50px 20px; /* 增加內邊距 */
+    margin: 80px auto; /* 確保容器在垂直方向上有間距，並水平居中 */
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center; /* 內容居中 */
-}
+  }
 
 .hero {
     margin-bottom: 30px;
