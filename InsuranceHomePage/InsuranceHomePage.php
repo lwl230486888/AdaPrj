@@ -1,23 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insuranche Home Page</title>
+    <title>Insurance Home Page</title>
     <link rel="stylesheet" href="../navbar/NavBar.css">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="script.js" defer></script>
 </head>
-
 <body>
-    <nav>
+
+<nav>
         <div class="wrapper">
             <div class="logo"><a href="../homePage/homePage.html">Legend Motor</a></div>
             <input type="radio" name="slider" id="menu-btn">
@@ -84,17 +77,33 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="hero">
-            <h1>Welcome to Legend Motor</h1>
-            <p>Explore the best insurance plans for your motorcycle and enjoy peace of mind.</p>
-            <button class="cta-button">Apply for Insurance Now</button>
-        </div>
+<div class="container">
+    <div class="hero" id="heroSection">
+        <h1>Welcome to Legend Motor</h1>
+        <p>Explore the best insurance plans for your motorcycle and enjoy peace of mind.</p>
+        <button class="cta-button" id="applyButton">Apply for Insurance Now</button>
     </div>
     
-    <footer>
-        <p>Contact Information | Social Media Links | Privacy Policy | Terms of Use</p>
-    </footer>
-</body>
+    <div class="form-container hidden" id="insuranceForm">
+    <h2>Select Insurance Type</h2>
+    <select id="insuranceType">
+        <option value="comprehensive">Comprehensive Insurance</option>
+        <option value="third-party">Third-party Insurance</option>
+        <option value="liability">Liability Insurance</option>
+    </select>
 
+    <h3>Vehicle Information</h3>
+    <form id="vehicleForm">
+        <input type="text" placeholder="Vehicle Year" required>
+        <input type="text" placeholder="CC" required>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</div>
+
+<footer>
+    <p>Contact Information | Social Media Links | Privacy Policy | Terms of Use</p>
+</footer>
+
+</body>
 </html>
