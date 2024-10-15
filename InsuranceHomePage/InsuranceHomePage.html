@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Home Page</title>
+    <link rel="stylesheet" href="../navbar/NavBar.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="wrapper">
+            <div class="logo"><a href="../homePage/homePage.html">Legend Motor</a></div>
+            <input type="radio" name="slider" id="menu-btn">
+            <input type="radio" name="slider" id="close-btn">
+            <ul class="nav-links">
+                <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                <li><a href="../homePage/homePage.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li>
+                    <a href="../PurchasePage/PurchasePage.html" class="desktop-item">Vehicles</a>
+                    <input type="checkbox" id="Vehicles">
+                    <label for="showDrop" class="mobile-item">Vehicles</label>
+                    <ul class="drop-menu">
+                        <li><a href="../PurchasePage/PurchasePage.html">Online Purchase</a></li>
+                        <li><a href="#">Vehicle Components</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="desktop-item">Insurance Services</a>
+                    <input type="checkbox" id="Insurance Services">
+                    <label for="showMega" class="mobile-item">Insurance Services</label>
+                    <div class="mega-box">
+                        <div class="content">
+                            <div class="row">
+                                <img src="./src/img4.png" alt="">
+                            </div>
+                            <div class="row">
+                                <header>Insurance Quotation Request</header>
+                                <ul class="mega-links">
+                                    <li><a href="#">Comprehensive Insurance</a></li>
+                                    <li><a href="#">Third-party Insurance</a></li>
+                                    <li><a href="#">Liability Insurance</a></li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <header>Quotation Overview</header>
+                                <ul class="mega-links">
+                                    <li><a href="#">View All Quotes</a></li>
+                                    <li><a href="#">Policy Terms and Conditions</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Feedback</a></li>
+                <li class="nav-icon">
+                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+                <li class="nav-icon">
+                    <a href="../registerPage/registerPage.html"><i class="fas fa-user"></i></a>
+                </li>
+            </ul>
+            <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero" id="heroSection">
+            <h1>Welcome to Legend Motor</h1>
+            <p>Explore the best insurance plans for your motorcycle and enjoy peace of mind.</p>
+            <button class="cta-button" id="applyButton">Apply for Insurance Now</button>
+        </div>
+
+        <div class="form-container hidden" id="insuranceForm">
+            <div id="vehicleInfoForm">
+                <h3>Vehicle Information</h3>
+                <form id="vehicleForm">
+                    <div class="form-group">
+                        <label for="vehicleYear">Vehicle Year</label>
+                        <input type="text" id="vehicleYear" placeholder="Vehicle Year" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cc">CC</label>
+                        <input type="text" id="cc" placeholder="CC" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleModel">Vehicle Model</label>
+                        <input type="text" id="vehicleModel" placeholder="Vehicle Model" required>
+                    </div>
+                    <div class="form-group hidden" id="priceInput">
+                        <label for="vehiclePrice">Vehicle Price</label>
+                        <input type="text" id="vehiclePrice" placeholder="Vehicle Price">
+                    </div>
+                    <button type="submit">Next</button>
+                </form>
+            </div>
+
+            <div id="insuranceTypeForm" class="hidden">
+                <h2>Select Insurance Type</h2>
+                <div id="insuranceCards">
+                    <div class="insurance-card" data-type="comprehensive">
+                        <h3>Comprehensive Insurance</h3>
+                        <button class="select-insurance">Select</button>
+                    </div>
+                    <div class="insurance-card" data-type="third-party">
+                        <h3>Third-party Insurance</h3>
+                        <button class="select-insurance">Select</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="driverInfoForm" class="hidden">
+                <h3>Driver Information</h3>
+                <button id="backToInsuranceType">Back to Insurance Type</button>
+                <form id="driverForm">
+                    <div class="form-group">
+                        <label for="namedDrivers">Number of Named Driver(s)</label>
+                        <select id="namedDrivers">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="driverAge">Driver Age</label>
+                        <select id="driverAge"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ncd">NCD</label>
+                        <select id="ncd">
+                            <option value="0">0%</option>
+                            <option value="20">20%</option>
+                            <option value="30">30%</option>
+                            <option value="40">40%</option>
+                            <option value="50">50%</option>
+                            <option value="60">60%</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="drivingExperience">Driving Experience</label>
+                        <select id="drivingExperience">
+                            <option value="learner">P License</option>
+                            <option value="less1">Less than 1 year</option>
+                            <option value="more1">More than 1 year</option>
+                            <option value="more2">More than 2 years</option>
+                            <option value="more3">More than 3 years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="penaltyPoints">Penalty Points in the last 3 years</label>
+                        <select id="penaltyPoints">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="driverOccupation">Driver Occupation</label>
+                        <input type="text" id="driverOccupation" placeholder="Occupation">
+                    </div>
+                    <button id="nextToContactInfo">Next</button>
+                </form>
+            </div>
+
+            <div id="contactInfoForm" class="hidden">
+                <h3>Contact Information</h3>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required />
+                </div>
+                <button id="submitContactInfo">Submit</button>
+            </div>
+
+            <div id="confirmationMessage" class="hidden">
+                <h3>Thank you!</h3>
+                <p>We have received your quotation request, and our customer service representative will contact you as
+                    soon as possible.</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer>
+        <p>Contact Information | Social Media Links | Privacy Policy | Terms of Use</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
