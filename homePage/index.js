@@ -19,3 +19,16 @@ window.addEventListener('scroll', function() {
         thirdCar.style.opacity = '0';
     }
 });
+
+window.onload = function() {
+    const user = localStorage.getItem('user');
+    if (user) {
+        // Redirect based on user role if user is logged in
+        const parsedUser = JSON.parse(user);
+        if (parsedUser.role === 'sales') {
+            window.location.href = '../DashBordPage/SalesDashBord.html';
+        } else {
+            window.location.href = '../DashBordPage/CustomerDashBord.html';
+        }
+    }
+};
