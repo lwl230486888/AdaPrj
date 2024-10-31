@@ -7,7 +7,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "lmdatabase";
+$dbname = "ins";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $conn->real_escape_string($email);
 
     // 查找数据库中的用户
-    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $sql = "SELECT id, first_name, last_name, email, password FROM users WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -37,16 +37,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $user['password'])) {
             // 登录成功
             $_SESSION['email'] = $user['email'];
-            // 重定向到主页
-            header("Location: ../homePage/homePage.html");
-            exit;
+            $_SESSION['first_name'] = $user['first_name'];
+            $_SESSION['last_name'] = $user['last_name'];
+
+            // 返回成功响应
+            echo json_encode([
+                'success' => true,
+                'user' => [
+                    'id' => $user['id'],
+                    'email' => $user['email'],
+                    'first_name' => $user['first_name'],
+                    'last_name' => $user['last_name']
+                ]
+            ]);
         } else {
             // 密码不正确
-            echo "Invalid password or email!";
+            echo json_encode(['success' => false, 'message' => 'Invalid password or email!']);
         }
     } else {
         // 没有找到用户
-        echo "No user found with this email!";
+        echo json_encode(['success' => false, 'message' => 'No user found with this email!']);
     }
 
     $conn->close();
