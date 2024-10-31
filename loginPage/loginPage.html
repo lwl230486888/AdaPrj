@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css"> <!-- 确保路径正确 -->
 </head>
 <body>
     <div class="container">
@@ -29,13 +29,12 @@
         
             <button type="submit" class="btn btn-primary">Login</button>
                     
-        <div class="form-group">
-            <p>No Account？</p>
-            <button class="btn btn-secondary" onclick="window.location.href='../registerPage/registerPage.html'">Go Register</button>
-        </div>
+            <div class="form-group">
+                <p>No Account?</p>
+                <button class="btn btn-secondary" onclick="window.location.href='../registerPage/registerPage.html'">Go Register</button>
+            </div>
             <p id="error-message" style="color: red;"></p>
         </form>
-
 
         <footer class="footer">
             <span>&copy; 2024 Legend Moto</span>
@@ -55,23 +54,34 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                // 检查响应是否为有效的 JSON
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     // Store user info in local storage
                     localStorage.setItem('user', JSON.stringify(data.user));
                     // Redirect based on user role
-                    if (data.user.role === 'sales') {
-                        window.location.href = '../DashBordPage/SalesDashBord.html'; // 銷售人員主頁
+                    if (data.user.role === 'staff') {
+                        window.location.href = '../DashBordPage/SalesDashBord.html'; // Staff dashboard
+                    } else if (data.user.role === 'customer') {
+                        window.location.href = '../DashBordPage/CustomerDashBord.html'; // Customer dashboard
                     } else {
-                        window.location.href = '../DashBordPage/CustomerDashBord.html'; // 客人主頁
+                        document.getElementById('error-message').textContent = 'Unknown role!';
                     }
                 } else {
                     // Show error message
                     document.getElementById('error-message').textContent = data.message;
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('error-message').textContent = 'An error occurred. Please try again later.';
+            });
         });
 
         // Check if user is already logged in
@@ -80,9 +90,9 @@
             if (user) {
                 // Redirect based on user role if user is logged in
                 const parsedUser = JSON.parse(user);
-                if (parsedUser.role === 'sales') {
-                    window.location.href = '../DashBordPage/SalesDashBord.html';
-                } else {
+                if (parsedUser.role === 'staff') {
+                    window.location.href = '../DashBordPage/StaffDashBord.html';
+                } else if (parsedUser.role === 'customer') {
                     window.location.href = '../DashBordPage/CustomerDashBord.html';
                 }
             }

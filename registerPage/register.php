@@ -20,7 +20,7 @@ $email = $_POST['email'];
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // 对密码进行哈希处理
 
 // 使用 prepared statements 插入数据
-$stmt = $conn->prepare("INSERT INTO users (region, first_name, last_name, email, password) VALUES (?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO customer (region, firstname, lastname, email, passwd) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("sssss", $region, $firstName, $lastName, $email, $password);
 
 // After successful execution of your database insert

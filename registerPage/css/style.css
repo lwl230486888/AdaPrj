@@ -144,3 +144,18 @@ body, html {
     transition: all 300ms ease-in-out;
     transform: translate(-50%, -50%) scale(1);
 }
+
+.staff-link {
+    font-size: 12px;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.staff-link a {
+    color: #007bff; /* 可以根据需要调整颜色 */
+    text-decoration: none;
+}
+
+.staff-link a:hover {
+    text-decoration: underline; /* 添加悬停效果 */
+}
