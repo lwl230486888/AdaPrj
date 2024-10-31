@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Registration</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    Legend Motor
+                </div>
+            </nav>
+        </header>
+
+        <form id="staffRegisterForm" method="post">
+            <div class="form-group">
+                <h1 class="register-title">Staff Registration</h1>
+
+                <label class="form-label" for="staffType">Staff Type</label>
+                <div>
+                    <input type="radio" id="carSales" name="staffType" value="carSales">
+                    <label for="carSales">Car Sales</label>
+                    <input type="radio" id="insuranceSales" name="staffType" value="insuranceSales">
+                    <label for="insuranceSales">Insurance Sales</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName"
+                    placeholder="Enter your first name" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                    placeholder="Confirm your password" required>
+            </div>
+
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+
+        <p id="error-message" style="color: red;"></p>
+
+        <div class="form-group">
+            <p>Already have an account? <button class="btn"
+                    onclick="window.location.href='../loginPage/loginPage.html'">Login</button></p>
+        </div>
+
+        <script>
+            document.getElementById('staffRegisterForm').addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                const formData = new FormData(this); // Get form data
+
+                // Send AJAX request
+                fetch('staff_register.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.includes('success')) {
+                            alert('Registration Successful'); // Show success message
+                            // Redirect or show popup if needed
+                        } else {
+                            document.getElementById('error-message').textContent = data; // Handle errors
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        </script>
+
+        <footer class="footer">
+            <span>&copy; 2024 Legend Motor</span>
+            <span>Privacy Policy</span>
+            <span>Contact Us</span>
+        </footer>
+    </div>
+</body>
+
+</html>
