@@ -1,47 +1,49 @@
 <?php
 header('Content-Type: application/json');
 
-// 讀取 POST 請求的原始數據
+// 读取 POST 请求的原始数据
 $data = json_decode(file_get_contents('php://input'), true);
 
-// 檢查數據是否有效
+// 检查数据是否有效
 if ($data) {
     $name = $data['name'];
     $phone = $data['phone'];
     $email = $data['email'];
+    $customerId = $data['customerId'] ?? null; // 如果未登录，customerId 为 null
     $driverAge = $data['driverAge'];
     $driverOccupation = $data['driverOccupation'];
     $vehicleYear = $data['vehicleYear'];
     $cc = $data['cc'];
     $vehicleModel = $data['vehicleModel'];
 
-    // 數據庫連接設置
-    $servername = "localhost"; // 根據你的設置修改
-    $username = "root"; // 根據你的設置修改
-    $password = ""; // 根據你的設置修改
-    $dbname = "ins"; // 根據你的設置修改
+    // 数据库连接设置
+    $servername = "localhost"; // 根据你的设置修改
+    $username = "root"; // 根据你的设置修改
+    $password = ""; // 根据你的设置修改
+    $dbname = "ins"; // 根据你的设置修改
 
-    // 數據庫連接
+    // 数据库连接
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // 檢查連接
+    // 检查连接
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        echo json_encode(["success" => false, "message" => "连接失败: " . $conn->connect_error]);
+        exit();
     }
 
-    // 插入數據
-    $stmt = $conn->prepare("INSERT INTO insurance_requests (name, phone, email, driver_age, driver_occupation, vehicle_year, cc, vehicle_model) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $name, $phone, $email, $driverAge, $driverOccupation, $vehicleYear, $cc, $vehicleModel);
+    // 插入数据（添加 customer_id 作为外键，若未登录则设置为 NULL）
+    $stmt = $conn->prepare("INSERT INTO insurance_requests (name, phone, email, driver_age, driver_occupation, vehicle_year, cc, vehicle_model, customer_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssss", $name, $phone, $email, $driverAge, $driverOccupation, $vehicleYear, $cc, $vehicleModel, $customerId);
 
     if ($stmt->execute()) {
-        echo json_encode(["success" => true, "message" => "新記錄插入成功"]);
+        echo json_encode(["success" => true, "message" => "Success Submit"]); 
     } else {
-        echo json_encode(["success" => false, "message" => "錯誤: " . $stmt->error]);
+        echo json_encode(["success" => false, "message" => "Eorr Connit: " . $stmt->error]);
     }
 
     $stmt->close();
     $conn->close();
 } else {
-    echo json_encode(["success" => false, "message" => "無效的數據"]);
+    echo json_encode(["success" => false, "message" => "Invalid data"]);
 }
 ?>
