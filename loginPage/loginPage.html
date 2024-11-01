@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./css/style.css"> <!-- 确保路径正确 -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">Legend Motor</div>
+            </nav>
+        </header>
+
+        <form id="loginForm" class="login-form">
+            <h1 class="login-title">Login</h1>
+        
+            <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+        
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Login</button>
+                    
+            <div class="form-group">
+                <p>No Account?</p>
+                <button class="btn btn-secondary" onclick="window.location.href='../registerPage/registerPage.html'">Go Register</button>
+            </div>
+            <p id="error-message" style="color: red;"></p>
+        </form>
+
+        <footer class="footer">
+            <span>&copy; 2024 Legend Moto</span>
+            <span><a href="#">Privacy Policy</a></span>
+            <span><a href="#">Contact Us</a></span>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(this); // Get form data
+
+            // Send AJAX request
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // 检查响应是否为有效的 JSON
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Store user info in local storage
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    // Redirect based on user role
+                    if (data.user.role === 'staff') {
+                        window.location.href = '../DashBordPage/SalesDashBord.html'; // Staff dashboard
+                    } else if (data.user.role === 'customer') {
+                        window.location.href = '../DashBordPage/CustomerDashBord.html'; // Customer dashboard
+                    } else {
+                        document.getElementById('error-message').textContent = 'Unknown role!';
+                    }
+                } else {
+                    // Show error message
+                    document.getElementById('error-message').textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('error-message').textContent = 'An error occurred. Please try again later.';
+            });
+        });
+
+        // Check if user is already logged in
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                // Redirect based on user role if user is logged in
+                const parsedUser = JSON.parse(user);
+                if (parsedUser.role === 'staff') {
+                    window.location.href = '../DashBordPage/StaffDashBord.html';
+                } else if (parsedUser.role === 'customer') {
+                    window.location.href = '../DashBordPage/CustomerDashBord.html';
+                }
+            }
+        };
+    </script>
+</body>
+</html>
