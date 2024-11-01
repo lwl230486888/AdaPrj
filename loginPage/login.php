@@ -32,10 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['userid'] = $user['userID']; // 假设 userID 是 staff 表中的字段
             $_SESSION['role'] = 'staff';
             setcookie("loggedin", "true", time() + (86400 * 1), "/"); 
-            echo "<script>alert('登录成功！'); window.location.href = '../homePage/homePage.html';</script>";
+            echo "<script>alert('Login Success'); window.location.href = '../homePage/homePage.html';</script>";
             exit;
         } else {
-            echo "<script>alert('无效的密码或邮箱！');window.location.href = 'loginPage.html';</script>";
+            echo "<script>alert('Invaild Password or Email!');window.location.href = 'loginPage.html';</script>";
         }
     } else {
         // 查询 customer 表
@@ -50,13 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['userid'] = $user['cusID']; // 假设 cusID 是 customer 表中的字段
                 $_SESSION['role'] = 'customer';
                 setcookie("loggedin", "true", time() + (86400 * 1), "/"); 
-                echo "<script>alert('登录成功！'); window.location.href = '../homePage/homePage.html';</script>";
+                echo "<script>alert('Login Success'); window.location.href = '../homePage/homePage.html';</script>";
                 exit;
             } else {
-                echo "<script>alert('无效的密码或邮箱！'); window.location.href = 'loginPage.html';</script>";
+                echo "<script>alert('Invaild Password or Email!'); window.location.href = 'loginPage.html';</script>";
             }
         } else {
-            echo "<script>alert('没有找到此邮箱的用户！');window.location.href = 'loginPage.html';</script>";
+            echo "<script>alert('Email Not Found!');window.location.href = 'loginPage.html';</script>";
         }
     }
 
