@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Inter', 'ABeeZee', 'Aldrich', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+ }
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.logo {
+    position: absolute;
+    left: 47px;
+    top: 24px;
+    font-family: Aldrich, sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    -webkit-text-stroke: 1px #000000;
+    text-shadow: 0px 2px 4px rgba(100,100,100,0.5);
+ }
+
+ .register-title {
+    font-family: ABeeZee, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 50%;
+ }
+
+.form-group {
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.form-label {
+    display: block;
+    color: #757575;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bdbdbd;
+    font-size: 14px;
+}
+
+.form-select {
+    position: relative;
+}
+
+.form-select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #00bcd4;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.footer span {
+    margin: 0 10px;
+}
+
+/* popup *************************************/
+.popup .overlay {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 0;
+    display: none;
+}
+
+.popup .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff;
+    width: 450px;
+    height: 220px;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.popup .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.popup.active .overlay {
+    display: block;
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}

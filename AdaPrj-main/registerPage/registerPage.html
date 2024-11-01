@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    Legend Motor
+                </div>
+            </nav>
+        </header>
+
+        <form id="registerForm" method="post">
+            <!-- list of countries -->
+            <div class="form-group">
+                <h1 class="register-title">Create Account</h1>
+                <label class="form-label" for="region">Region</label>
+                <select class="form-control form-select" id="region" name="region">
+                    <option value="">Select a region</option>
+                    <optgroup label="North America">
+                        <option value="Canada">Canada</option>
+                        <option value="United States">United States</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Belize">Belize</option>
+                        <option value="Costa Rica">Costa Rica</option>
+                        <option value="El Salvador">El Salvador</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Honduras">Honduras</option>
+                        <option value="Nicaragua">Nicaragua</option>
+                        <option value="Panama">Panama</option>
+                    </optgroup>
+                    <optgroup label="South America">
+                        <option value="Argentina">Argentina</option>
+                        <option value="Bolivia">Bolivia</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Chile">Chile</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Guyana">Guyana</option>
+                        <option value="Paraguay">Paraguay</option>
+                        <option value="Peru">Peru</option>
+                        <option value="Suriname">Suriname</option>
+                        <option value="Uruguay">Uruguay</option>
+                        <option value="Venezuela">Venezuela</option>
+                    </optgroup>
+                    <optgroup label="Europe">
+                        <option value="Albania">Albania</option>
+                        <option value="Andorra">Andorra</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Azerbaijan">Azerbaijan</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Cyprus">Cyprus</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Estonia">Estonia</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Kazakhstan">Kazakhstan</option>
+                        <option value="Kosovo">Kosovo</option>
+                        <option value="Latvia">Latvia</option>
+                        <option value="Liechtenstein">Liechtenstein</option>
+                        <option value="Lithuania">Lithuania</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="Malta">Malta</option>
+                        <option value="Moldova">Moldova</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Montenegro">Montenegro</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="North Macedonia">North Macedonia</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Russia">Russia</option>
+                        <option value="San Marino">San Marino</option>
+                        <option value="Serbia">Serbia</option>
+                        <option value="Slovakia">Slovakia</option>
+                        <option value="Slovenia">Slovenia</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Vatican City">Vatican City</option>
+                    </optgroup>
+                    <optgroup label="Africa">
+                        <option value="Algeria">Algeria</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Burkina Faso">Burkina Faso</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="Cape Verde">Cape Verde</option>
+                        <option value="Central African Republic">Central African Republic</option>
+                        <option value="Chad">Chad</option>
+                        <option value="Comoros">Comoros</option>
+                        <option value="Congo (Brazzaville)">Congo (Brazzaville)</option>
+                        <option value="Congo (Kinshasa)">Congo (Kinshasa)</option>
+                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                        <option value="Djibouti">Djibouti</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option value="Eritrea">Eritrea</option>
+                        <option value="Eswatini">Eswatini</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Gabon">Gabon</option>
+                        <option value="Gambia">Gambia</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Guinea">Guinea</option>
+                        <option value="Guinea-Bissau">Guinea-Bissau</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Lesotho">Lesotho</option>
+                        <option value="Liberia">Liberia</option>
+                        <option value="Libya">Libya</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Mauritania">Mauritania</option>
+                        <option value="Mauritius">Mauritius</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Mozambique">Mozambique</option>
+                        <option value="Namibia">Namibia</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="São Tomé and Principe">São Tomé and Principe</option>
+                        <option value="Senegal">Senegal</option>
+                        <option value="Seychelles">Seychelles</option>
+                        <option value="Sierra Leone">Sierra Leone</option>
+                        <option value="Somalia">Somalia</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="South Sudan">South Sudan</option>
+                        <option value="Sudan">Sudan</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Togo">Togo</option>
+                        <option value="Tunisia">Tunisia</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="Zambia">Zambia</option>
+                        <option value="Zimbabwe">Zimbabwe</option>
+                    </optgroup>
+                    <optgroup label="Asia">
+                        <option value="Afghanistan">Afghanistan</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Azerbaijan">Azerbaijan</option>
+                        <option value="Bahrain">Bahrain</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Brunei">Brunei</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="China">China</option>
+                        <option value="Cyprus">Cyprus</option>
+                        <option value="East Timor">East Timor</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="India">India</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName"
+                    placeholder="Enter your first name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName"
+                    placeholder="Enter your last name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    placeholder="Enter your password">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                    placeholder="Confirm your password">
+            </div>
+
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+
+        <div class="popup" id="popup1">
+            <div class="overlay"></div>
+            <div class="content">
+                <span class="close-btn" onclick="togglePopup()">×</span>
+                <h2>Registration Successful</h2>
+                <button class="btn" onclick="window.location.href='../loginPage/loginPage.html'">Login Now</button>
+            </div>
+        </div>
+        
+        
+
+        <p id="error-message" style="color: red;"></p>
+
+        <script>
+            document.getElementById('registerForm').addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                const formData = new FormData(this); // Get form data
+
+                // Send AJAX request
+                fetch('register.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Assuming data contains a success message or JSON response
+                        if (data.includes('success')) {
+                            togglePopup(); // Show popup if submission is successful
+                        } else {
+                            // Handle errors, e.g., display error message
+                            document.getElementById('error-message').textContent = data; // or any error message
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+
+            function togglePopup() {
+                const popup = document.getElementById("popup1");
+                popup.classList.toggle("active");
+
+                // 控制 overlay 的显示
+                const overlay = popup.querySelector('.overlay');
+                if (popup.classList.contains("active")) {
+                    overlay.style.display = 'block'; // 显示 overlay
+                } else {
+                    overlay.style.display = 'none'; // 隐藏 overlay
+                }
+            }
+        </script>
+        </script>
+
+        <footer class="footer">
+            <span>&copy; 2024 Legend Moto</span>
+            <span>Privacy Policy</span>
+            <span>Contact Us</span>
+        </footer>
+    </div>
+</body>
+
+</html>
