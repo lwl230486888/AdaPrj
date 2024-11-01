@@ -98,7 +98,6 @@ nav .wrapper {
   left: 0;
   width: 100%;
   padding: 0 30px;
-  top: 85px;
   opacity: 0;
   visibility: hidden;
 }
@@ -107,9 +106,87 @@ nav .wrapper {
   background: rgba(36, 37, 38, 0.7);
   padding: 25px 20px;
   display: flex;
+  flex-direction: row;
+  /* 讓項目垂直排列 */
+  align-items: flex-start;
+  /* 讓項目靠左對齊 */
   width: 100%;
-  justify-content: space-between;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.cart-item {
+  display: flex;
+  flex-direction: column;
+  /* 垂直排列 */
+  align-items: flex-start;
+  /* 左對齊 */
+  padding: 10px;
+  position: relative;
+}
+
+.cart-item img {
+  margin-bottom: 0px;
+  /* 圖片與名稱之間的間距 */
+}
+
+.cart-item p {
+  margin: 0;
+  padding: 0;
+  /* 控制名稱和價格的間距 */
+}
+
+.cancel-btn {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  color: #d32f2f;
+  /* 按鈕懸停效果 */
+}
+
+.quantity-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  /* 控制按鈕和顯示之間的間距 */
+}
+
+.quantity-container button {
+  width: 25px;
+  height: 25px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.quantity-container span {
+  font-size: 14px;
+}
+
+.checkout-btn {
+  position: absolute;
+  right: 50px;
+  bottom: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Aldrich';
+  background-color: transparent;
+  border: 1px solid #5555;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.checkout-btn:hover {
+  background-color: #693EFF;
+  color: #eee;
 }
 
 .mega-box .content .row {
@@ -118,8 +195,10 @@ nav .wrapper {
 }
 
 .content .row img {
-  width: 100%; /* 圖像佔父容器的 70% 寬度 */
-  height: auto; /* 自動調整高度以保持比例 */
+  width: 100%;
+  /* 圖像佔父容器的 70% 寬度 */
+  height: auto;
+  /* 自動調整高度以保持比例 */
   object-fit: cover;
 }
 
@@ -195,7 +274,7 @@ nav .wrapper {
 
   ::-webkit-scrollbar-thumb {
     background: #3A3B3C;
-    
+
   }
 
   #menu-btn:checked~.nav-links {
@@ -255,7 +334,7 @@ nav .wrapper {
 
   .nav-links .mobile-item:hover {
     background: #3A3B3C;
-    
+
   }
 
   .drop-menu li {

@@ -176,3 +176,22 @@ body, html {
  .btn-secondary {
     margin-top: 10px; /* 增加按钮上方的间距 */
  }
+
+ .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+ }
+ .divider::before,
+ .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #bdbdbd;
+ }
+ .divider span {
+    padding: 0 10px;
+    color: #bdbdbd;
+    font-family: ABeeZee, sans-serif;
+    font-size: 18px;
+ }

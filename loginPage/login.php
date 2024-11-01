@@ -6,7 +6,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "lmdatabase";
+$dbname = "ins";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -20,22 +20,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $email = $conn->real_escape_string($email);
 
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $result = $conn->query($sql);
+    // 查询 staff 表
+    $staff_sql = "SELECT * FROM staff WHERE email = '$email'";
+    $staff_result = $conn->query($staff_sql);
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    if ($staff_result->num_rows > 0) {
+        $user = $staff_result->fetch_assoc();
 
         if (password_verify($password, $user['password'])) {
-
             $_SESSION['email'] = $user['email'];
-            header("Location: ../homePage/homePage.html");
+            $_SESSION['userid'] = $user['userID']; // 假设 userID 是 staff 表中的字段
+            $_SESSION['role'] = 'staff';
+            setcookie("loggedin", "true", time() + (86400 * 1), "/"); 
+            echo "<script>alert('登录成功！'); window.location.href = '../homePage/homePage.html';</script>";
             exit;
         } else {
-            echo "Invalid password or email!";
+            echo "<script>alert('无效的密码或邮箱！');window.location.href = 'loginPage.html';</script>";
         }
     } else {
-        echo "No user found with this email!";
+        // 查询 customer 表
+        $customer_sql = "SELECT * FROM customer WHERE email = '$email'";
+        $customer_result = $conn->query($customer_sql);
+
+        if ($customer_result->num_rows > 0) {
+            $user = $customer_result->fetch_assoc();
+
+            if (password_verify($password, $user['passWd'])) {
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['userid'] = $user['cusID']; // 假设 cusID 是 customer 表中的字段
+                $_SESSION['role'] = 'customer';
+                setcookie("loggedin", "true", time() + (86400 * 1), "/"); 
+                echo "<script>alert('登录成功！'); window.location.href = '../homePage/homePage.html';</script>";
+                exit;
+            } else {
+                echo "<script>alert('无效的密码或邮箱！'); window.location.href = 'loginPage.html';</script>";
+            }
+        } else {
+            echo "<script>alert('没有找到此邮箱的用户！');window.location.href = 'loginPage.html';</script>";
+        }
     }
 
     $conn->close();
