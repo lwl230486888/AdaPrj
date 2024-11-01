@@ -14,7 +14,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // 检查连接
 if ($conn->connect_error) {
-    die('连接失败: ' . $conn->connect_error);
+    die('Connet Eorr: ' . $conn->connect_error);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // 验证密码是否匹配
     if ($password !== $confirmPassword) {
-        echo '密码不匹配';
+        echo 'Password does not match';
         exit;
     }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         echo 'success';
     } else {
-        echo '错误: ' . $stmt->error;
+        echo 'Err: ' . $stmt->error;
     }
 
     $stmt->close();

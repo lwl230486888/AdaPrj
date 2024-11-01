@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insurance Home Page</title>
+    <title>Insurance FAQs</title>
     <link rel="stylesheet" href="../navbar/NavBar.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,10 +13,24 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .faq {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-
     <nav>
         <div class="wrapper">
             <div class="logo"><a href="../homePage/homePage.html">Legend Motor</a></div>
@@ -89,81 +103,50 @@
     </nav>
 
     <div class="container">
-        <div class="hero" id="heroSection">
-            <h1>Welcome to Legend Motor</h1>
-            <p>Explore the best insurance plans for your motorcycle and enjoy peace of mind.</p>
-            <button class="cta-button" id="applyButton">Apply for Insurance Now</button>
+        <h1>Insurance FAQs</h1>
+
+        <div class="faq">
+            <div class="question">1. What is insurance?</div>
+            <div class="answer">Insurance is a risk management tool that helps protect individuals or businesses from
+                potential financial losses by paying a premium.</div>
         </div>
 
-        <div class="form-container hidden" id="insuranceForm">
-            <div id="vehicleInfoForm" class="form-section">
-                <h3>Vehicle Information</h3>
-                <form id="vehicleForm">
-                    <div class="form-group">
-                        <label for="vehicleYear">Vehicle Year</label>
-                        <input type="text" name="vehicleYear" id="vehicleYear" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cc">CC</label>
-                        <input type="text" name="cc" id="cc" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicleModel">Vehicle Model</label>
-                        <input type="text" name="vehicleModel" id="vehicleModel" required>
-                    </div>
-                    <button type="submit">Next</button>
-                </form>
-            </div>
-
-            <div id="driverInfoForm" class="form-section hidden">
-                <h3>Driver Information</h3>
-                <form id="driverForm">
-                    <div class="form-group">
-                        <label for="driverAge">Driver Age</label>
-                        <select name="driverAge" id="driverAge" required>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="driverOccupation">Driver Occupation</label>
-                        <input type="text" name="driverOccupation" id="driverOccupation" required>
-                    </div>
-                    <button type="submit" id="nextToContactInfo">Next</button>
-                </form>
-            </div>
-
-            <div id="contactInfoForm" class="form-section hidden">
-                <h3>Contact Information</h3>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="text" name="phone" id="phone" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" required />
-                        <input type="hidden" id="customerId" name="customerId" value="12345">
-                    </div>
-                    <button type="submit" id="submitContactInfo">Submit</button>
-                </form>
-            </div>
-
-            <div id="confirmationMessage" class="form-section hidden">
-                <h3>Thank you!</h3>
-                <p>We have received your quotation request, and our customer service representative will contact you as
-                    soon as possible.</p>
-            </div>
+        <div class="faq">
+            <div class="question">2. Why do I need insurance?</div>
+            <div class="answer">Insurance can help alleviate financial stress during unexpected events, ensuring your
+                financial security.</div>
         </div>
+
+        <div class="faq">
+            <div class="question">3. How is insurance premium calculated?</div>
+            <div class="answer">Insurance premiums are typically calculated based on various factors, including the
+                amount of coverage, type of insurance, your age, and health status.</div>
+        </div>
+
+        <div class="faq">
+            <div class="question">4. Can I use my insurance anywhere?</div>
+            <div class="answer">This depends on your insurance policy. Some coverage may only be valid in specific areas
+                or under certain circumstances.</div>
+        </div>
+
+        <div class="faq">
+            <div class="question">5. How do I file a claim?</div>
+            <div class="answer">You can usually file a claim through your insurance company's website, by phone, or in
+                person. Be prepared with relevant documents and information.</div>
+        </div>
+
     </div>
 
-    <footer>
-        <p>Contact Information | Social Media Links | Privacy Policy | Terms of Use</p>
-    </footer>
+    <script>
+        // Handle question click event to toggle answer display
+        document.querySelectorAll('.question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
 
-    <script src="script.js"></script>
 </body>
 
 </html>
