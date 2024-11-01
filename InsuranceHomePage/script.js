@@ -15,7 +15,7 @@ window.onload = function () {
     // 事件绑定 - 申请保险按钮
     document.getElementById("applyButton").addEventListener("click", function () {
         const heroSection = document.getElementById("heroSection");
-        
+
         // 隐藏英雄部分并显示表单
         heroSection.style.transition = "opacity 0.5s";
         heroSection.style.opacity = "0";
@@ -27,13 +27,14 @@ window.onload = function () {
         }, 500);
     });
 
-    // 表单提交事件
+    // 表单提交事件 - 车辆信息表单
     document.getElementById("vehicleForm").addEventListener("submit", function (event) {
         event.preventDefault(); // 防止表单提交
         document.getElementById("vehicleInfoForm").classList.add("hidden"); // 隐藏车辆信息表单
         document.getElementById("driverInfoForm").classList.remove("hidden"); // 显示驾驶者信息表单
     });
 
+    // 表单提交事件 - 驾驶者信息表单
     document.getElementById("driverForm").addEventListener("submit", function (event) {
         event.preventDefault(); // 防止表单提交
         document.getElementById("driverInfoForm").classList.add("hidden"); // 隐藏驾驶者信息表单
@@ -43,7 +44,7 @@ window.onload = function () {
     // 提交联系信息
     document.getElementById("submitContactInfo").addEventListener("click", function (event) {
         event.preventDefault(); // 防止表单的默认提交行为
-        
+
         // 收集客户信息
         const name = document.getElementById("name").value;
         const phone = document.getElementById("phone").value;
@@ -56,11 +57,6 @@ window.onload = function () {
         const customerId = localStorage.getItem('customerId'); // 获取客户ID
         
         if (name && phone && email && driverAge && driverOccupation && vehicleYear && cc && vehicleModel) {
-            // 隐藏联系资料表单
-            document.getElementById("contactInfoForm").classList.add("hidden");
-            // 显示确认信息
-            document.getElementById("confirmationMessage").classList.remove("hidden");
-
             // 准备要发送的数据
             const data = {
                 name: name,
@@ -85,7 +81,13 @@ window.onload = function () {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                alert(data.message); // 提供成功或错误反馈
+                if (data.success) {
+                    // 隐藏联系资料表单并显示确认信息
+                    document.getElementById("contactInfoForm").classList.add("hidden");
+                    document.getElementById("confirmationMessage").classList.remove("hidden");
+                } else {
+                    alert(data.message); // 显示错误信息
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -100,6 +102,16 @@ window.onload = function () {
     const user = localStorage.getItem('user');
     if (user) {
         const parsedUser = JSON.parse(user);
+        // 假设在用户登录后获取到的用户信息
+        const userInfo = {
+            customerId: parsedUser.customerId || 'defaultCustomerId' // 从解析的用户数据中获取客户ID
+        };
+        
+        // 存储客户ID
+        localStorage.setItem('customerId', userInfo.customerId); 
+        document.getElementById('customerId').value = userInfo.customerId; // 设置隐藏输入
+
+        // 根据角色重定向
         if (parsedUser.role === 'sales') {
             window.location.href = '../DashBordPage/SalesDashBord.html';
         } else {

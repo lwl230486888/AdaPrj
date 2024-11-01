@@ -6,10 +6,11 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 // 检查数据是否有效
 if ($data) {
+    // 从请求中获取数据
     $name = $data['name'];
     $phone = $data['phone'];
     $email = $data['email'];
-    $customerId = $data['customerId'] ?? null; // 如果未登录，customerId 为 null
+    $customerId = $data['customerId'] ?? null; // 客户ID
     $driverAge = $data['driverAge'];
     $driverOccupation = $data['driverOccupation'];
     $vehicleYear = $data['vehicleYear'];
@@ -31,19 +32,19 @@ if ($data) {
         exit();
     }
 
-    // 插入数据（添加 customer_id 作为外键，若未登录则设置为 NULL）
-    $stmt = $conn->prepare("INSERT INTO insurance_requests (name, phone, email, driver_age, driver_occupation, vehicle_year, cc, vehicle_model, customer_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    // 插入数据
+    $stmt = $conn->prepare("INSERT INTO insurance_requests (name, phone, email, driver_age, driver_occupation, vehicle_year, cc, vehicle_model, customer_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssssss", $name, $phone, $email, $driverAge, $driverOccupation, $vehicleYear, $cc, $vehicleModel, $customerId);
 
     if ($stmt->execute()) {
-        echo json_encode(["success" => true, "message" => "Success Submit"]); 
+        echo json_encode(["success" => true, "message" => "成功提交申请"]); 
     } else {
-        echo json_encode(["success" => false, "message" => "Eorr Connit: " . $stmt->error]);
+        echo json_encode(["success" => false, "message" => "错误: " . $stmt->error]);
     }
 
     $stmt->close();
     $conn->close();
 } else {
-    echo json_encode(["success" => false, "message" => "Invalid data"]);
+    echo json_encode(["success" => false, "message" => "无效数据"]);
 }
 ?>
