@@ -5,10 +5,10 @@ let listHTML = document.querySelector('.carousel .list');
 let seeMoreButtons = document.querySelectorAll('.seeMore');
 let backButton = document.getElementById('back');
 
-nextButton.onclick = function(){
+nextButton.onclick = function () {
     showSlider('next');
 }
-prevButton.onclick = function(){
+prevButton.onclick = function () {
     showSlider('prev');
 }
 let unAcceppClick;
@@ -18,38 +18,38 @@ const showSlider = (type) => {
 
     carousel.classList.remove('next', 'prev');
     let items = document.querySelectorAll('.carousel .list .item');
-    if(type === 'next'){
+    if (type === 'next') {
         listHTML.appendChild(items[0]);
         carousel.classList.add('next');
-    }else{
+    } else {
         listHTML.prepend(items[items.length - 1]);
         carousel.classList.add('prev');
     }
     clearTimeout(unAcceppClick);
-    unAcceppClick = setTimeout(()=>{
+    unAcceppClick = setTimeout(() => {
         nextButton.style.pointerEvents = 'auto';
         prevButton.style.pointerEvents = 'auto';
     }, 2000)
 }
 seeMoreButtons.forEach((button) => {
-    button.onclick = function(){
+    button.onclick = function () {
         carousel.classList.remove('next', 'prev');
         carousel.classList.add('showDetail');
     }
 });
-backButton.onclick = function(){
+backButton.onclick = function () {
     carousel.classList.remove('showDetail');
 }
-
-window.onload = function() {
-    const user = localStorage.getItem('user');
-    if (user) {
-        // Redirect based on user role if user is logged in
-        const parsedUser = JSON.parse(user);
-        if (parsedUser.role === 'sales') {
-            window.location.href = '../DashBordPage/SalesDashBord.html';
-        } else {
-            window.location.href = '../DashBordPage/CustomerDashBord.html';
-        }
+function togglePopup() {
+    const modal = document.querySelector('.modal');
+    // 切換顯示/隱藏
+    if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+    } else {
+        modal.style.display = 'flex';
     }
-};
+}
+function closeModal() {
+    const modal = document.querySelector('.modal');
+    modal.style.display = 'none';
+}

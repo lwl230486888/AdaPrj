@@ -150,12 +150,3 @@ body, html {
        flex-wrap: wrap;
    }
 }
-
-.form-group {
-   margin-bottom: 20px; /* 确保每个组之间有足够的间距 */
-   text-align: center; /* 使内容居中 */
-}
-
-.btn-secondary {
-   margin-top: 10px; /* 增加按钮上方的间距 */
-}
