@@ -13,8 +13,6 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="./css/style.css">
-
-
 </head>
 
 <body>
@@ -28,7 +26,6 @@
         </header>
 
         <form id="registerForm" method="post">
-            <!-- list of countries -->
             <div class="form-group">
                 <h1 class="register-title">Create Account</h1>
                 <label class="form-label" for="region">Region</label>
@@ -227,10 +224,14 @@
                 <button class="btn" onclick="window.location.href='../loginPage/loginPage.html'">Login Now</button>
             </div>
         </div>
-        
-        
 
         <p id="error-message" style="color: red;"></p>
+        <div class="divider">
+            <span>or</span>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-secondary" onclick="window.location.href='../loginPage/loginPage.html'">Login</button></p>
+        </div>
 
         <script>
             document.getElementById('registerForm').addEventListener('submit', function (e) {
@@ -245,12 +246,10 @@
                 })
                     .then(response => response.text())
                     .then(data => {
-                        // Assuming data contains a success message or JSON response
                         if (data.includes('success')) {
                             togglePopup(); // Show popup if submission is successful
                         } else {
-                            // Handle errors, e.g., display error message
-                            document.getElementById('error-message').textContent = data; // or any error message
+                            document.getElementById('error-message').textContent = data; // Handle errors
                         }
                     })
                     .catch(error => console.error('Error:', error));
@@ -260,21 +259,16 @@
                 const popup = document.getElementById("popup1");
                 popup.classList.toggle("active");
 
-                // 控制 overlay 的显示
                 const overlay = popup.querySelector('.overlay');
-                if (popup.classList.contains("active")) {
-                    overlay.style.display = 'block'; // 显示 overlay
-                } else {
-                    overlay.style.display = 'none'; // 隐藏 overlay
-                }
+                overlay.style.display = popup.classList.contains("active") ? 'block' : 'none';
             }
-        </script>
         </script>
 
         <footer class="footer">
             <span>&copy; 2024 Legend Moto</span>
             <span>Privacy Policy</span>
             <span>Contact Us</span>
+            <span>Staff Register？<a href="staff_registerPage.html">Click Here</span>
         </footer>
     </div>
 </body>

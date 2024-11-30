@@ -82,32 +82,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="mega-box">
                         <div class="content">
                             <div class="row">
-                                <img src="./src/img4.png" alt="">
+                                <img src="./css/img4.png" alt="">
                             </div>
                             <div class="row">
                                 <header>Insurance Quotation Request</header>
                                 <ul class="mega-links">
                                     <li><a href="../InsuranceHomePage/InsuranceHomePage.html">Insurance Product</a></li>
+<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
                                     <li><a href="#">Insurance FAQs</a></li>
+=======
+                                    <li><a href="../InsuranceHomePage/FAQ.html">Insurance FAQs</a></li>
+>>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                                 </ul>
                             </div>
                             <div class="row">
                                 <header>Quotation Overview</header>
                                 <ul class="mega-links">
-                                    <li><a href="#">View All Quotes</a></li>
+                                    <li><a href="../DashBordPage/insdashboard.html">Dash Board</a></li>
                                     <li><a href="#">Policy Terms and Conditions</a></li>
-                                    <li><a href="#">FAQs</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </li>
                 <li><a href="#">Feedback</a></li>
-                <li class="nav-icon">
-                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                <!-- Add Shopping Cart Icon -->
+                <li class="desktop-item">
+                    <a href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <input type="checkbox" id="showMega">
+                    <label for="showMega" class="showMegaLabel"></label>
+                    <div class="mega-box">
+                        <div class="content" id="cartItemsContainer">
+                            <!-- 顧客選擇的汽車將會出現在這裡 -->
+                        </div>
+                        <button onclick="togglePopup()" class="checkout-btn">Checkout</button> <!-- Checkout 按鈕 -->
+                    </div>
                 </li>
+
+                <!-- Add User Icon -->
                 <li class="nav-icon">
-                    <a href="../registerPage/registerPage.html"><i class="fas fa-user"></i></a>
+                    <a href="../loginPage/loginPage.html">
+                        <i class="fas fa-user"></i>
+                    </a>
                 </li>
             </ul>
             <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
@@ -122,11 +140,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="form-container hidden" id="insuranceForm">
-            <div id="vehicleInfoForm">
+            <div id="vehicleInfoForm" class="form-section">
                 <h3>Vehicle Information</h3>
                 <form id="vehicleForm" method="POST" action="index.php">
                     <div class="form-group">
                         <label for="vehicleYear">Vehicle Year</label>
+<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
                         <input type="text" name="vehicleYear" id="vehicleYear" placeholder="Vehicle Year" required>
                     </div>
                     <div class="form-group">
@@ -136,11 +155,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label for="vehicleModel">Vehicle Model</label>
                         <input type="text" name="vehicleModel" id="vehicleModel" placeholder="Vehicle Model" required>
+=======
+                        <input type="text" name="vehicleYear" id="vehicleYear" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cc">CC</label>
+                        <input type="text" name="cc" id="cc" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleModel">Vehicle Model</label>
+                        <input type="text" name="vehicleModel" id="vehicleModel" required>
+>>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     </div>
                     <button type="submit">Next</button>
                 </form>
             </div>
 
+<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
             <div id="driverInfoForm" class="hidden">
                 <h3>Driver Information</h3>
                 <button id="backToInsuranceType">Back to Insurance Type</button>
@@ -153,19 +184,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <option value="36-45">36-45</option>
                             <option value="46-55">46-55</option>
                             <option value="56+">56+</option>
+=======
+            <div id="driverInfoForm" class="form-section hidden">
+                <h3>Driver Information</h3>
+                <form id="driverForm">
+                    <div class="form-group">
+                        <label for="driverAge">Driver Age</label>
+                        <select name="driverAge" id="driverAge" required>
+>>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="driverOccupation">Driver Occupation</label>
+<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
                         <input type="text" name="driverOccupation" id="driverOccupation" placeholder="Occupation">
+=======
+                        <input type="text" name="driverOccupation" id="driverOccupation" required>
+>>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     </div>
                     <button type="submit" id="nextToContactInfo">Next</button>
                 </form>
             </div>
 
-            <div id="contactInfoForm" class="hidden">
+            <div id="contactInfoForm" class="form-section hidden">
                 <h3>Contact Information</h3>
+<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
                 <form method="POST" action="index.php">
+=======
+                <form id="contactForm">
+>>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" name="name" id="name" required />
@@ -177,12 +224,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" required />
+<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
+=======
+                        <input type="hidden" id="customerId" name="customerId" value="12345">
+>>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     </div>
                     <button type="submit" id="submitContactInfo">Submit</button>
                 </form>
             </div>
 
-            <div id="confirmationMessage" class="hidden">
+            <div id="confirmationMessage" class="form-section hidden">
                 <h3>Thank you!</h3>
                 <p>We have received your quotation request, and our customer service representative will contact you as soon as possible.</p>
             </div>

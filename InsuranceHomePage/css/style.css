@@ -3,18 +3,19 @@ body {
     display: flex;
     flex-direction: column; /* 垂直排列 */
     align-items: center; /* 水平居中 */
-    justify-content: flex-start; /* 從頂部開始 */
+    justify-content: flex-start; /* 从顶部开始 */
+    background-color: #f7f7f7; /* 淡灰色背景 */
 }
 
 .container {
     max-width: 1200px;
-    width: 100%; /* 使容器寬度自適應 */
-    padding: 50px 20px; /* 增加內邊距 */
-    margin: 80px auto; /* 確保容器在垂直方向上有間距，並水平居中 */
+    width: 100%; /* 使容器宽度自适应 */
+    padding: 50px 20px; /* 增加内边距 */
+    margin: 80px auto; /* 确保容器在垂直方向上有间距，并水平居中 */
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center; /* 內容居中 */
+    text-align: center; /* 内容居中 */
 }
 
 .hero {
@@ -65,105 +66,101 @@ footer {
 
 @media screen and (max-width: 600px) {
     .logo {
-        font-size: 1.5rem; /* 調整字體大小 */
+        font-size: 1.5rem; /* 调整字体大小 */
         left: 20px;
         top: 12px;
     }
-    #fstCar, #secCar, #thirdCar {
-        height: 100vh;
-    }
 }
 
-/* 中等設備，例如平板（寬度在600px到1024px之間） */
 @media screen and (min-width: 600px) and (max-width: 1024px) {
     .logo {
-        font-size: 2rem; /* 調整字體大小 */
+        font-size: 2rem; /* 调整字体大小 */
         left: 30px;
         top: 18px;
     }
-    #fstCar, #secCar, #thirdCar {
-        height: 100vh;
-    }
 }
 
-/* 大於1024px寬度的設備，例如桌面瀏覽器 */
 @media screen and (min-width: 1024px) {
     .logo {
         font-size: 2.5rem;
         left: 40px;
         top: 20px;
     }
-    #fstCar, #secCar, #thirdCar {
-        height: 100vh;
-    }
 }
 
 #vehicleForm {
-    max-width: 600px; /* 設置表單最大寬度 */
+    max-width: 600px; /* 设置表单最大宽度 */
     margin: 20px auto; /* 居中 */
-    padding: 20px; /* 內邊距 */
-    background: #f8f9fa; /* 背景顏色 */
-    border-radius: 8px; /* 圓角 */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+    padding: 20px; /* 内边距 */
+    background: #f8f9fa; /* 背景颜色 */
+    border: 2px solid #007bff; /* 边界线颜色和宽度 */
+    border-radius: 8px; /* 圆角 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}
+
+#driverInfoForm,
+#contactInfoForm {
+    background-color: #f9f9f9;
+    border: 2px solid #007bff; /* 边界线颜色和宽度 */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
 }
 
 .form-group {
-    margin-bottom: 15px; /* 每個表單組的間距 */
+    margin-bottom: 15px; /* 每个表单组的间距 */
 }
 
 label {
-    display: block; /* 使標籤顯示為塊級元素 */
-    margin-bottom: 5px; /* 標籤與輸入框之間的間距 */
-    font-weight: bold; /* 加粗標籤 */
+    display: block; /* 使标签显示为块级元素 */
+    margin-bottom: 5px; /* 标签与输入框之间的间距 */
+    font-weight: bold; /* 加粗标签 */
 }
 
-input[type="text"] {
-    width: 100%; /* 輸入框寬度100% */
-    padding: 10px; /* 內邊距 */
-    border: 1px solid #ccc; /* 邊框顏色 */
-    border-radius: 5px; /* 圓角 */
-    box-sizing: border-box; /* 包括內邊距和邊框在內 */
+input[type="text"],
+input[type="email"],
+select {
+    width: 100%; /* 输入框宽度100% */
+    padding: 10px; /* 内边距 */
+    border: 1px solid #ccc; /* 边框颜色 */
+    border-radius: 5px; /* 圆角 */
+    box-sizing: border-box; /* 包括内边距和边框在内 */
 }
 
 button {
-    background-color: #007bff; /* 按鈕顏色 */
-    color: white; /* 字體顏色 */
-    padding: 10px 15px; /* 按鈕內邊距 */
-    border: none; /* 無邊框 */
-    border-radius: 5px; /* 圓角 */
-    cursor: pointer; /* 鼠標指針樣式 */
-    font-size: 16px; /* 字體大小 */
-    transition: background-color 0.3s ease; /* 背景顏色過渡效果 */
+    background-color: #007bff; /* 按钮颜色 */
+    color: white; /* 字体颜色 */
+    padding: 10px 15px; /* 按钮内边距 */
+    border: none; /* 无边框 */
+    border-radius: 5px; /* 圆角 */
+    cursor: pointer; /* 鼠标指针样式 */
+    font-size: 16px; /* 字体大小 */
+    transition: background-color 0.3s; /* 背景颜色过渡效果 */
 }
 
 button:hover {
-    background-color: #0056b3; /* 鼠標懸停時的顏色 */
+    background-color: #0056b3; /* 鼠标悬停时的颜色 */
 }
 
 select {
-    width: 100%; /* 寬度100% */
-    padding: 10px; /* 內邊距 */
-    border: 1px solid #ccc; /* 邊框顏色 */
-    border-radius: 5px; /* 圓角 */
-    background-color: #f8f9fa; /* 背景顏色 */
-    font-size: 16px; /* 字體大小 */
-    appearance: none; /* 隱藏默認下拉箭頭 */
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><polygon points="0,0 20,0 10,10" fill="gray"/></svg>'); /* 自定義下拉箭頭 */
-    background-repeat: no-repeat; /* 不重複 */
+    background-color: #f8f9fa; /* 背景颜色 */
+    appearance: none; /* 隐藏默认下拉箭头 */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><polygon points="0,0 20,0 10,10" fill="gray"/></svg>'); /* 自定义下拉箭头 */
+    background-repeat: no-repeat; /* 不重复 */
     background-position: right 10px center; /* 位置 */
     background-size: 12px; /* 大小 */
-    transition: border-color 0.3s ease; /* 邊框顏色過渡效果 */
 }
 
 select:focus {
-    border-color: #007bff; /* 聚焦狀態邊框顏色 */
-    outline: none; /* 移除默認焦點輪廓 */
+    border-color: #007bff; /* 聚焦状态边框颜色 */
+    outline: none; /* 移除默认焦点轮廓 */
 }
 
 #insuranceCards {
     display: flex; /* 使用 Flexbox */
     justify-content: center; /* 水平居中 */
-    gap: 20px; /* 卡片之間的間距 */
+    gap: 20px; /* 卡片之间的间距 */
 }
 
 .insurance-card {
@@ -173,79 +170,15 @@ select:focus {
     text-align: center;
     cursor: pointer;
     transition: box-shadow 0.3s;
-    flex: 1; /* 使卡片等分寬度 */
-    max-width: 300px; /* 設定最大寬度 */
+    flex: 1; /* 使卡片等分宽度 */
+    max-width: 300px; /* 设置最大宽度 */
 }
 
 .insurance-card:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* 表單容器 */
-#contactInfoForm {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-}
-
-/* 標題樣式 */
-#contactInfoForm h3 {
-    font-family: 'Inter', sans-serif;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-/* 表單組 */
-.form-group {
-    margin-bottom: 15px;
-}
-
-/* 標籤樣式 */
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: #555;
-}
-
-/* 輸入框樣式 */
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-/* 輸入框聚焦樣式 */
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* 提交按鈕樣式 */
-#submitContactInfo {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-/* 按鈕懸停樣式 */
-#submitContactInfo:hover {
-    background-color: #0056b3;
-}
-
-/* 確認信息樣式 */
+/* 确认信息样式 */
 #confirmationMessage {
     background-color: #e9ffe9;
     border-radius: 8px;
