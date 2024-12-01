@@ -1,4 +1,12 @@
 window.onload = function () {
+
+    if (!window.userLoggedIn) {
+        // 如果未登入，顯示提示訊息並轉到登入頁
+        alert('Please login to apply for insurance.');
+        window.location.href = '../loginPage/loginPage.html';
+        return;
+    }
+
     // 初始时隐藏整个保险表单区域
     const insuranceForm = document.getElementById("insuranceForm");
     insuranceForm.style.display = "none";
@@ -118,4 +126,53 @@ window.onload = function () {
             window.location.href = '../DashBordPage/CustomerDashBord.html';
         }
     }
+    
+     // 修改提交事件
+     document.getElementById("submitContactInfo").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        // 使用session中的用戶資料
+        const userData = window.userData;
+        
+        const formData = {
+            // 車輛資料
+            vehicleYear: document.getElementById("vehicleYear").value,
+            cc: document.getElementById("cc").value,
+            vehicleModel: document.getElementById("vehicleModel").value,
+            
+            // 駕駛者資料
+            driverAge: document.getElementById("driverAge").value,
+            driverOccupation: document.getElementById("driverOccupation").value,
+            
+            // 聯絡資料 - 使用登入用戶的資料作為預設值
+            name: document.getElementById("name").value || userData.name,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value || userData.email,
+            
+            // 用戶ID
+            customer_ID: userData.userid
+        };
+
+        // 發送到伺服器
+        fetch('submitData.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("contactInfoForm").classList.add("hidden");
+                document.getElementById("confirmationMessage").classList.remove("hidden");
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Submit failed. Please try again later.");
+        });
+    });
 };

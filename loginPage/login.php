@@ -1,100 +1,146 @@
 <?php
-// 开启错误报告
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-// 数据库连接设置
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ins";
 
-// 创建数据库连接
+// 登入嘗試次數限制配置
+$MAX_LOGIN_ATTEMPTS = 3;
+$LOGIN_TIMEOUT = 1800; // 30分鐘
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// 检查连接
 if ($conn->connect_error) {
-    die("连接失败: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// 处理 POST 请求
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // 确保输入不为空
-    if (empty($email) || empty($password)) {
-        echo "<script>alert('请输入邮箱和密码。'); window.location.href = 'loginPage.html';</script>";
-        exit;
+// 檢查是否被鎖定
+function isLocked() {
+    if (!isset($_SESSION['login_attempts']) || !isset($_SESSION['last_login_attempt'])) {
+        return false;
     }
-
-    // 处理 SQL 注入
-    $email = $conn->real_escape_string($email);
-
-    // 查询 staff 表
-    $staff_sql = "SELECT * FROM staff WHERE email = '$email'";
-    $staff_result = $conn->query($staff_sql);
-
-    // 检查查询是否成功
-    if (!$staff_result) {
-        echo "错误: " . $conn->error;
-        exit;
+    
+    global $MAX_LOGIN_ATTEMPTS, $LOGIN_TIMEOUT;
+    $time_passed = time() - $_SESSION['last_login_attempt'];
+    
+    if ($_SESSION['login_attempts'] >= $MAX_LOGIN_ATTEMPTS && $time_passed < $LOGIN_TIMEOUT) {
+        return true;
     }
+    
+    if ($time_passed >= $LOGIN_TIMEOUT) {
+        $_SESSION['login_attempts'] = 0;
+        return false;
+    }
+    
+    return false;
+}
 
-    // 检查员工用户是否存在
-    if ($staff_result->num_rows > 0) {
-        $user = $staff_result->fetch_assoc();
-
-        // 验证密码
-        if (password_verify($password, $user['password'])) {
-            // 登录成功，设置会话
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['userid'] = $user['userID'];
-            $_SESSION['role'] = 'staff';
-            setcookie("loggedin", "true", time() + (86400 * 1), "/");
-            echo "<script>alert('员工登录成功'); window.location.href = '../homePage/homePage.html';</script>";
-            exit;
-        } else {
-            echo "<script>alert('无效的密码！'); window.location.href = 'loginPage.html';</script>";
-            exit;
+// 記錄登入嘗試
+function recordLoginAttempt($success) {
+    if ($success) {
+        $_SESSION['login_attempts'] = 0;
+        unset($_SESSION['last_login_attempt']);
+    } else {
+        if (!isset($_SESSION['login_attempts'])) {
+            $_SESSION['login_attempts'] = 0;
         }
+        $_SESSION['login_attempts']++;
+        $_SESSION['last_login_attempt'] = time();
     }
+}
 
-    // 如果没有在员工表中找到，检查客户表
-    $customer_sql = "SELECT * FROM customer WHERE email = '$email'";
-    $customer_result = $conn->query($customer_sql);
-
-    // 检查查询是否成功
-    if (!$customer_result) {
-        echo "错误: " . $conn->error;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // 檢查是否被鎖定
+    if (isLocked()) {
+        $remaining_time = $LOGIN_TIMEOUT - (time() - $_SESSION['last_login_attempt']);
+        echo "<script>alert('Too many failed attempts. Please try again after " . 
+             ceil($remaining_time/60) . " minutes.'); window.location.href = 'loginPage.html';</script>";
         exit;
     }
 
-    // 检查客户用户是否存在
-    if ($customer_result->num_rows > 0) {
-        $user = $customer_result->fetch_assoc();
+    $email = trim($_POST['email']);
+    $input_password = $_POST['password'];
 
-        // 验证密码
-        if (password_verify($password, $user['password'])) {
-            // 登录成功，设置会话
+    if (empty($email) || empty($input_password)) {
+        echo "<script>alert('Please enter both email and password.'); window.location.href = 'loginPage.html';</script>";
+        exit;
+    }
+
+    // 檢查customer表
+    $stmt = $conn->prepare("SELECT * FROM customer WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        if (password_verify($input_password, $user['password'])) {
+            // 登入成功
+            recordLoginAttempt(true);
             $_SESSION['email'] = $user['email'];
             $_SESSION['userid'] = $user['customer_ID'];
             $_SESSION['role'] = 'customer';
-            setcookie("loggedin", "true", time() + (86400 * 1), "/");
-            echo "<script>alert('客户登录成功'); window.location.href = '../homePage/homePage.html';</script>";
-            exit;
-        } else {
-            echo "<script>alert('无效的密码！'); window.location.href = 'loginPage.html';</script>";
+            $_SESSION['name'] = $user['firstName'] . ' ' . $user['lastName'];
+            
+            // 設置安全的cookie
+            setcookie("loggedin", "true", [
+                'expires' => time() + 86400,
+                'path' => '/',
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'Strict'
+            ]);
+            
+            echo "<script>alert('Login successful!'); window.location.href = '../homePage/homePage.html';</script>";
             exit;
         }
-    } else {
-        echo "<script>alert('邮箱未找到！'); window.location.href = 'loginPage.html';</script>";
     }
 
-    // 关闭连接
+    // 檢查staff表
+    $stmt = $conn->prepare("SELECT * FROM staff WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        if (password_verify($input_password, $user['password'])) {
+            // 登入成功
+            recordLoginAttempt(true);
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['userid'] = $user['userID'];
+            $_SESSION['role'] = 'staff';
+            $_SESSION['name'] = $user['first_name'] . ' ' . $user['last_name'];
+            
+            // 設置安全的cookie
+            setcookie("loggedin", "true", [
+                'expires' => time() + 86400,
+                'path' => '/',
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'Strict'
+            ]);
+            
+            echo "<script>alert('Staff login successful!'); window.location.href = '../homePage/homePage.html';</script>";
+            exit;
+        }
+    }
+
+    // 登入失敗
+    recordLoginAttempt(false);
+    echo "<script>alert('Invalid email or password'); window.location.href = 'loginPage.html';</script>";
+    
+    $stmt->close();
     $conn->close();
 } else {
-    echo "<script>alert('无效的请求。'); window.location.href = 'loginPage.html';</script>";
+    header("Location: loginPage.html");
+    exit;
 }
+// 登入成功後
+session_regenerate_id(true); // 重新生成 session id
+$_SESSION['last_activity'] = time(); // 記錄最後活動時間
 ?>

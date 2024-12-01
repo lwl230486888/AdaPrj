@@ -9,53 +9,70 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Aldrich&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="../auth.js"></script>
 </head>
 
 <body>
 
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 連接到數據庫
-    $servername = "localhost"; // 數據庫伺服器
-    $username = "root"; // 數據庫用戶名
-    $password = ""; // 數據庫密碼
-    $dbname = "ins"; // 數據庫名稱
+    <?php
+    session_start();
 
-    // 創建連接
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    // 檢查登入狀態
+    $isLoggedIn = isset($_SESSION['userid']);
+    $userData = null;
 
-    // 檢查連接
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if ($isLoggedIn) {
+        $userData = [
+            'userid' => $_SESSION['userid'],
+            'name' => $_SESSION['name'],
+            'email' => $_SESSION['email']
+        ];
     }
 
-    // 獲取表單數據
-    $vehicleYear = $_POST['vehicleYear'];
-    $cc = $_POST['cc'];
-    $vehicleModel = $_POST['vehicleModel'];
-    $driverAge = $_POST['driverAge'];
-    $driverOccupation = $_POST['driverOccupation'];
-    $name = $_POST['name'];
-    $phone = $_POST['phone'];
-    $email = $_POST['email'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // 連接到數據庫
+        $servername = "localhost"; // 數據庫伺服器
+        $username = "root"; // 數據庫用戶名
+        $password = ""; // 數據庫密碼
+        $dbname = "ins"; // 數據庫名稱
+    
+        // 創建連接
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // 插入數據
-    $sql = "INSERT INTO insurance_requests (vehicle_year, cc, vehicle_model, driver_age, driver_occupation, name, phone, email)
+        // 檢查連接
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // 獲取表單數據
+        $vehicleYear = $_POST['vehicleYear'];
+        $cc = $_POST['cc'];
+        $vehicleModel = $_POST['vehicleModel'];
+        $driverAge = $_POST['driverAge'];
+        $driverOccupation = $_POST['driverOccupation'];
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+
+        // 插入數據
+        $sql = "INSERT INTO insurance_requests (vehicle_year, cc, vehicle_model, driver_age, driver_occupation, name, phone, email)
             VALUES ('$vehicleYear', '$cc', '$vehicleModel', '$driverAge', '$driverOccupation', '$name', '$phone', '$email')";
 
-    if ($conn->query($sql) === TRUE) {
-        // 提交成功後顯示感謝信息
-        echo "<script>alert('Thank you! Your request has been submitted.');</script>";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+        if ($conn->query($sql) === TRUE) {
+            // 提交成功後顯示感謝信息
+            echo "<script>alert('Thank you! Your request has been submitted.');</script>";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
 
-    // 關閉連接
-    $conn->close();
-}
-?>
+        // 關閉連接
+        $conn->close();
+    }
+    ?>
 
     <nav>
         <div class="wrapper">
@@ -82,25 +99,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="mega-box">
                         <div class="content">
                             <div class="row">
-                                <img src="./css/img4.png" alt="">
+                                <img src="./src/img4.png" alt="">
                             </div>
                             <div class="row">
                                 <header>Insurance Quotation Request</header>
                                 <ul class="mega-links">
-                                    <li><a href="../InsuranceHomePage/InsuranceHomePage.html">Insurance Product</a></li>
-<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
+                                    <li><a href="../InsuranceHomePage/InsuranceHomePage.php">Insurance Product</a></li>
                                     <li><a href="#">Insurance FAQs</a></li>
-=======
-                                    <li><a href="../InsuranceHomePage/FAQ.html">Insurance FAQs</a></li>
->>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
+
                                 </ul>
                             </div>
                             <div class="row">
-                                <header>Quotation Overview</header>
-                                <ul class="mega-links">
-                                    <li><a href="../DashBordPage/insdashboard.html">Dash Board</a></li>
-                                    <li><a href="#">Policy Terms and Conditions</a></li>
-                                </ul>
+
                             </div>
                         </div>
                     </div>
@@ -122,8 +132,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </li>
 
                 <!-- Add User Icon -->
-                <li class="nav-icon">
-                    <a href="../loginPage/loginPage.html">
+                <li class="nav-icon" id="userIconContainer">
+                    <a id="userIcon">
                         <i class="fas fa-user"></i>
                     </a>
                 </li>
@@ -145,17 +155,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form id="vehicleForm" method="POST" action="index.php">
                     <div class="form-group">
                         <label for="vehicleYear">Vehicle Year</label>
-<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
-                        <input type="text" name="vehicleYear" id="vehicleYear" placeholder="Vehicle Year" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cc">CC</label>
-                        <input type="text" name="cc" id="cc" placeholder="CC" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicleModel">Vehicle Model</label>
-                        <input type="text" name="vehicleModel" id="vehicleModel" placeholder="Vehicle Model" required>
-=======
                         <input type="text" name="vehicleYear" id="vehicleYear" required>
                     </div>
                     <div class="form-group">
@@ -165,42 +164,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label for="vehicleModel">Vehicle Model</label>
                         <input type="text" name="vehicleModel" id="vehicleModel" required>
->>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     </div>
                     <button type="submit">Next</button>
                 </form>
             </div>
 
-<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
-            <div id="driverInfoForm" class="hidden">
-                <h3>Driver Information</h3>
-                <button id="backToInsuranceType">Back to Insurance Type</button>
-                <form id="driverForm" method="POST" action="index.php">
-                    <div class="form-group">
-                        <label for="driverAge">Driver Age</label>
-                        <select name="driverAge" id="driverAge" required>
-                            <option value="18-25">18-25</option>
-                            <option value="26-35">26-35</option>
-                            <option value="36-45">36-45</option>
-                            <option value="46-55">46-55</option>
-                            <option value="56+">56+</option>
-=======
             <div id="driverInfoForm" class="form-section hidden">
                 <h3>Driver Information</h3>
                 <form id="driverForm">
                     <div class="form-group">
                         <label for="driverAge">Driver Age</label>
                         <select name="driverAge" id="driverAge" required>
->>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="driverOccupation">Driver Occupation</label>
-<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
-                        <input type="text" name="driverOccupation" id="driverOccupation" placeholder="Occupation">
-=======
                         <input type="text" name="driverOccupation" id="driverOccupation" required>
->>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     </div>
                     <button type="submit" id="nextToContactInfo">Next</button>
                 </form>
@@ -208,11 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div id="contactInfoForm" class="form-section hidden">
                 <h3>Contact Information</h3>
-<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
-                <form method="POST" action="index.php">
-=======
                 <form id="contactForm">
->>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" name="name" id="name" required />
@@ -224,10 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" required />
-<<<<<<< HEAD:InsuranceHomePage/InsuranceHomePage.php
-=======
                         <input type="hidden" id="customerId" name="customerId" value="12345">
->>>>>>> 025748363f89aecc9806f3523c3df6620dd323d4:InsuranceHomePage/InsuranceHomePage.html
                     </div>
                     <button type="submit" id="submitContactInfo">Submit</button>
                 </form>
@@ -235,7 +207,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div id="confirmationMessage" class="form-section hidden">
                 <h3>Thank you!</h3>
-                <p>We have received your quotation request, and our customer service representative will contact you as soon as possible.</p>
+                <p>We have received your quotation request, and our customer service representative will contact you as
+                    soon as possible.</p>
             </div>
         </div>
     </div>
@@ -243,7 +216,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <footer>
         <p>Contact Information | Social Media Links | Privacy Policy | Terms of Use</p>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            initAuthCheck();
 
+            // 如果需要立即獲取用戶狀態
+            checkLoginStatus().then(result => {
+                if (!result.isLoggedIn) {
+                    // 處理未登入情況
+                    console.log('User not logged in');
+                    // 可以在這裡添加相應的處理邏輯
+                } else {
+                    // 處理已登入情況
+                    console.log('User logged in:', result.userData);
+                    // 可以在這裡添加相應的處理邏輯
+                }
+            });
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 

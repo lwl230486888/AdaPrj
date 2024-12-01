@@ -15,12 +15,14 @@ if ($conn->connect_error) {
     die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
 }
 
+// 獲取當前登入的客戶ID
+$customer_id = $_SESSION['userid'] ?? null;
+
+// Debug信息
+error_log("Customer ID: " . $customer_id);
+
 // 基本查詢
-$sql = "SELECT 
-            ir.*, 
-            c.name as customer_name 
-        FROM insurance_requests ir 
-        LEFT JOIN customer c ON ir.customer_ID = c.customer_ID";
+$sql = "SELECT * FROM insurance_requests WHERE customer_ID = '$customer_id'";
 
 // 執行查詢
 $result = $conn->query($sql);
