@@ -37,7 +37,7 @@
                     <div class="mega-box">
                         <div class="content">
                             <div class="row">
-                                <img src="./src/img4.png" alt="">
+                                <img src="../InsuranceHomePage/css/img4.png" alt="">
                             </div>
                             <div class="row">
                                 <header>Insurance Quotation Request</header>
@@ -84,60 +84,46 @@
     </nav>
 
     <div class="dashboard-container">
-        <div class="orders-section">
-            <div class="filters">
-                <select id="orderType">
-                    <option value="all">All Orders</option>
-                    <option value="vehicle">Vehicle Orders</option>
-                    <option value="insurance">Insurance Orders</option>
-                </select>
-                <select id="orderStatus">
-                    <option value="all">All Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="processing">Processing</option>
-                    <option value="completed">Completed</option>
-                </select>
-                <input type="text" id="searchOrder" placeholder="Search by Order ID or Customer Name">
-            </div>
+        <h1>Insurance Applications Dashboard</h1>
+        
+        <div class="filters">
+            <select id="orderStatus" class="filter-select">
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="accepted">Accepted</option>
+                <option value="rejected">Rejected</option>
+                <option value="completed">Completed</option>
+            </select>
 
-            <div class="orders-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Date</th>
-                            <th>Customer</th>
-                            <th>Type</th>
-                            <th>Item</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ordersTableBody">
-                        <!-- 將由JavaScript動態填充 -->
-                    </tbody>
-                </table>
-            </div>
+            <input type="text" id="searchInput" placeholder="Search by Order ID or Customer" class="search-input">
+        </div>
+
+        <div class="table-container">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Vehicle Model</th>
+                        <th>CC</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- 訂單詳情Modal -->
+    <!-- Modal for order details -->
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Order Details</h2>
-            <div id="orderDetails">
-                <!-- 將由JavaScript動態填充 -->
-            </div>
-            <div class="status-update">
-                <h3>Update Status</h3>
-                <select id="updateStatus">
-                    <option value="pending">Pending</option>
-                    <option value="processing">Processing</option>
-                    <option value="completed">Completed</option>
-                </select>
-                <button id="updateStatusBtn">Update</button>
-            </div>
+            <div id="orderDetails"></div>
         </div>
     </div>
     <script>
