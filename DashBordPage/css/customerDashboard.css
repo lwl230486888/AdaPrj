@@ -1,3 +1,4 @@
+/* 延續原有的Legend Motor風格 */
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
 
 * {
@@ -14,111 +15,59 @@ nav {
     background: rgba(36, 37, 38, 0.7);
 }
 
+/* Dashboard specific styles */
 .dashboard-container {
     padding: 100px 20px 20px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-.welcome-section {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: linear-gradient(to right, #2c3e50, #3498db);
-    color: white;
-    border-radius: 10px;
+.orders-section {
+    background: white;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    padding: 20px;
 }
 
 .filters {
     display: flex;
     gap: 15px;
+    margin-bottom: 20px;
 }
 
-.filters select {
+.filters select, .filters input {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    background-color: white;
 }
 
-.orders-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
+.orders-table {
+    overflow-x: auto;
 }
 
-.order-card {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-}
-
-.order-card:hover {
-    transform: translateY(-5px);
-}
-
-.order-card h3 {
-    margin-bottom: 10px;
-    color: #2c3e50;
-}
-
-.order-info {
-    margin-bottom: 15px;
-}
-
-.order-info p {
-    margin: 5px 0;
-    color: #666;
-}
-
-.order-status {
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.9em;
-    text-align: center;
-}
-
-.status-pending {
-    background-color: #ffeeba;
-    color: #856404;
-}
-
-.status-processing {
-    background-color: #b8daff;
-    color: #004085;
-}
-
-.status-completed {
-    background-color: #c3e6cb;
-    color: #155724;
-}
-
-.view-details-btn {
-    display: block;
+table {
     width: 100%;
-    padding: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
     background-color: #007bff;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    margin-top: 15px;
-}
-
-.view-details-btn:hover {
-    background-color: #0056b3;
 }
 
 /* Modal styles */
@@ -140,7 +89,7 @@ nav {
     padding: 20px;
     width: 90%;
     max-width: 600px;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .close {
@@ -151,49 +100,232 @@ nav {
     cursor: pointer;
 }
 
-.order-status-timeline {
-    margin-top: 30px;
+.status-update {
+    margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid #ddd;
 }
 
-.timeline-item {
-    display: flex;
-    align-items: center;
-    margin: 15px 0;
+#updateStatus {
+    margin: 10px 0;
+    padding: 8px;
 }
 
-.timeline-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-.timeline-active {
+#updateStatusBtn {
+    padding: 8px 16px;
     background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.timeline-inactive {
-    background-color: #ddd;
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: 500;
 }
+
+.status-badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-badge-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+.status-badge-pending {
+    background-color: #6c757d;
+    color: white;
+}
+
+.status-badge-default {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.btn-view {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-view:hover {
+    background-color: #0056b3;
+}
+/* 主要容器樣式 */
+.dashboard-container {
+    padding: 80px 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 標題樣式 */
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* 篩選區域樣式 */
+.filters-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    min-width: 150px;
+}
+
+/* 表格樣式 */
+.table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.orders-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 狀態標籤樣式 */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: #ffd700;
+    color: #000;
+}
+
+.status-processing {
+    background-color: #1e90ff;
+    color: white;
+}
+
+.status-completed {
+    background-color: #32cd32;
+    color: white;
+}
+
+/* 按鈕樣式 */
+.btn-view {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-view:hover {
+    background-color: #0056b3;
+}
+
 .logout-btn {
+    padding: 8px 15px;
     background-color: #dc3545;
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 5px;
-    transition: background-color 0.3s;
 }
 
 .logout-btn:hover {
     background-color: #c82333;
 }
 
+/* Modal 樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.status-update {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+#updateStatus {
+    margin: 10px 0;
+    padding: 8px;
+}
+
+#updateStatusBtn {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#updateStatusBtn:hover {
+    background-color: #218838;
+}
+
+/* 用戶信息樣式 */
 .user-info {
     display: flex;
     align-items: center;
@@ -201,10 +333,362 @@ nav {
     color: white;
 }
 
-.user-info i {
-    font-size: 1.2em;
+#staffName {
+    font-weight: 500;
+}
+/* 加入到你嘅 staffDashboard.css */
+.detail-row {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
 }
 
-#staffName, #customerName {
+.detail-row strong {
+    display: inline-block;
+    width: 150px;
+    color: #666;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.status-update {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+#updateStatus {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.update-btn {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.update-btn:hover {
+    background-color: #218838;
+}
+
+.insurance-details-form {
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
     font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-upload {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.insurance-details {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+.status-accepted {
+    background-color: #28a745;
+}
+
+.status-rejected {
+    background-color: #dc3545;
+}
+
+.status-completed {
+    background-color: #6c757d;
+}
+
+.btn-complete {
+    padding: 8px 20px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-complete:hover {
+    background-color: #138496;
+}
+
+/* 訂單卡片樣式 */
+.orders-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.order-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.order-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+/* 狀態標籤樣式 */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: white;
+}
+
+.status-pending {
+    background-color: #ffc107;
+}
+
+.status-processing {
+    background-color: #17a2b8;
+}
+
+.status-completed {
+    background-color: #28a745;
+}
+
+.status-rejected {
+    background-color: #dc3545;
+}
+
+.order-details p {
+    margin: 8px 0;
+    color: #666;
+}
+
+.btn-view {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-view:hover {
+    background-color: #0056b3;
+}
+
+/* Modal 樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 8px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* 報價詳情樣式 */
+.insurance-quotation {
+    padding: 20px;
+}
+
+.insurance-quotation h2,
+.insurance-quotation h3,
+.insurance-quotation h4 {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.section {
+    margin: 20px 0;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.section h5 {
+    margin: 10px 0;
+    color: #333;
+    font-weight: bold;
+}
+
+.detail-row {
+    display: flex;
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.detail-row label {
+    width: 200px;
+    font-weight: 500;
+    color: #666;
+}
+
+.no-quote {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+/* 按鈕樣式 */
+.action-buttons {
+    margin-top: 20px;
+    text-align: right;
+    padding: 10px 0;
+}
+
+.btn-accept,
+.btn-reject {
+    padding: 8px 20px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-accept {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-reject {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-accept:hover {
+    background-color: #218838;
+}
+
+.btn-reject:hover {
+    background-color: #c82333;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 2% auto;
+    }
+
+    .detail-row {
+        flex-direction: column;
+    }
+
+    .detail-row label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-accept,
+    .btn-reject {
+        margin: 5px 0;
+        width: 100%;
+    }
+}
+
+/* 錯誤訊息樣式 */
+.error-message {
+    text-align: center;
+    color: #dc3545;
+    padding: 20px;
+    background-color: #f8d7da;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+/* 無訂單訊息樣式 */
+.no-orders {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin: 20px 0;
 }

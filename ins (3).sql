@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-12-01 07:41:38
+-- 產生時間： 2024-12-01 15:08:18
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -50,6 +50,36 @@ INSERT INTO `customer` (`customer_ID`, `firstName`, `lastName`, `email`, `passwo
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `insurance_details`
+--
+
+CREATE TABLE `insurance_details` (
+  `detail_id` int(11) NOT NULL,
+  `insurance_request_id` int(11) DEFAULT NULL,
+  `quote_date` date DEFAULT NULL,
+  `premium_amount` decimal(10,2) DEFAULT NULL,
+  `ncd_percentage` int(11) DEFAULT NULL,
+  `tppd_limit` decimal(15,2) DEFAULT NULL,
+  `tpbi_limit` decimal(15,2) DEFAULT NULL,
+  `excess_tppd` decimal(10,2) DEFAULT NULL,
+  `excess_young_driver` decimal(10,2) DEFAULT NULL,
+  `excess_inexperienced` decimal(10,2) DEFAULT NULL,
+  `excess_unnamed` decimal(10,2) DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `insurance_details`
+--
+
+INSERT INTO `insurance_details` (`detail_id`, `insurance_request_id`, `quote_date`, `premium_amount`, `ncd_percentage`, `tppd_limit`, `tpbi_limit`, `excess_tppd`, `excess_young_driver`, `excess_inexperienced`, `excess_unnamed`, `remarks`, `staff_id`, `updated_at`) VALUES
+(1, 16, '2024-12-01', 12444.00, 1, 123.00, 123.00, 123.00, 123.00, 123.00, 123.00, '', 77, '2024-12-01 12:12:39');
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `insurance_requests`
 --
 
@@ -65,17 +95,27 @@ CREATE TABLE `insurance_requests` (
   `email` varchar(100) DEFAULT NULL,
   `StaffID` int(11) DEFAULT NULL,
   `customer_ID` int(11) DEFAULT NULL,
-  `status` varchar(20) DEFAULT 'pending',
-  `request_date` datetime DEFAULT NULL
+  `status` enum('pending','processing','accepted','rejected','completed') DEFAULT 'pending',
+  `request_date` datetime DEFAULT NULL,
+  `premium_amount` decimal(10,2) DEFAULT NULL,
+  `ncd_percentage` int(11) DEFAULT NULL,
+  `tppd_limit` decimal(15,2) DEFAULT NULL,
+  `tpbi_limit` decimal(15,2) DEFAULT NULL,
+  `excess_tppd` decimal(10,2) DEFAULT NULL,
+  `excess_young_driver` decimal(10,2) DEFAULT NULL,
+  `excess_inexperienced` decimal(10,2) DEFAULT NULL,
+  `excess_unnamed` decimal(10,2) DEFAULT NULL,
+  `remarks` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `insurance_requests`
 --
 
-INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`, `status`, `request_date`) VALUES
-(15, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', NULL, 8, 'pending', '2024-12-01 12:43:16'),
-(16, '2018', '1500', 'jazz', '18', '33412', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'pending', '2024-12-01 13:39:34');
+INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`, `status`, `request_date`, `premium_amount`, `ncd_percentage`, `tppd_limit`, `tpbi_limit`, `excess_tppd`, `excess_young_driver`, `excess_inexperienced`, `excess_unnamed`, `remarks`) VALUES
+(15, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 12:43:16', 123.00, 12, 123.00, 123.00, 123.00, 123.00, 123.00, 123.00, ''),
+(16, '2018', '1500', 'jazz', '18', '33412', '黃秉權', '67025123', 'murikki@iCloud.com', 77, 8, 'completed', '2024-12-01 13:39:34', 123321.00, 1, 123.00, 123.00, 123.00, 123.00, 2123.00, 312.00, ''),
+(17, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 21:13:22', 123.00, 3, 321.00, 413.00, 1234.00, 123.00, 412.00, 312.00, '');
 
 -- --------------------------------------------------------
 
@@ -119,7 +159,8 @@ INSERT INTO `staff` (`userID`, `first_name`, `last_name`, `email`, `password`, `
 (61, 'WONG CHAK YUEN', '黃澤元', '1@gmail.com', '$2y$10$b2Tr.tV/FVOvBnKdq/YWk.3soKu2BeeGYj2JfxnPgwImA8DEQujnq', '2024-10-12 13:09:54', NULL, 'CarStaff', NULL),
 (62, 'WONG CHAK YUEN', '黃澤元', '2@gmail.com', '$2y$10$CEK/U2Cz4xQxV5dGfR2Gc.hvJz8DVrVCpSSlQNegWI4yZ2Q0FQcGG', '2024-10-18 03:16:28', NULL, 'CarStaff', NULL),
 (72, 'Wong', 'Wing', 'asddd@gmail.com', '$2y$10$iYNuVzeq07XHe0KgLh3bFO2ItRgdHVGVAGiGnoz7AJcdQLQgleJGS', '2024-11-01 13:17:26', NULL, 'insuranceS', NULL),
-(75, 'Wong', 'Wing', 'murikki@iCloud.com', '$2y$10$UIR6cA59Wu7evd8JTyX/zuePzq92.FudsXAXjmh5R8BF46pkMo86O', '2024-12-01 05:22:36', NULL, 'carSales', NULL);
+(75, 'Wong', 'Wing', 'murikki@iCloud.com', '$2y$10$UIR6cA59Wu7evd8JTyX/zuePzq92.FudsXAXjmh5R8BF46pkMo86O', '2024-12-01 05:22:36', NULL, 'carSales', NULL),
+(77, 'Wong', 'Wing', 'asdddd@gmail.com', '$2y$10$pUg2zACujJERediRS1tTduhQGYPyf9j8RUmmuuVHZJLU3FERR3Sve', '2024-12-01 11:18:51', NULL, 'insuranceS', NULL);
 
 -- --------------------------------------------------------
 
@@ -163,6 +204,14 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`customer_ID`);
 
 --
+-- 資料表索引 `insurance_details`
+--
+ALTER TABLE `insurance_details`
+  ADD PRIMARY KEY (`detail_id`),
+  ADD KEY `insurance_request_id` (`insurance_request_id`),
+  ADD KEY `staff_id` (`staff_id`);
+
+--
 -- 資料表索引 `insurance_requests`
 --
 ALTER TABLE `insurance_requests`
@@ -201,10 +250,16 @@ ALTER TABLE `customer`
   MODIFY `customer_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_details`
+--
+ALTER TABLE `insurance_details`
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_requests`
 --
 ALTER TABLE `insurance_requests`
-  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
@@ -216,7 +271,7 @@ ALTER TABLE `orders`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `vehicles`
@@ -227,6 +282,13 @@ ALTER TABLE `vehicles`
 --
 -- 已傾印資料表的限制式
 --
+
+--
+-- 資料表的限制式 `insurance_details`
+--
+ALTER TABLE `insurance_details`
+  ADD CONSTRAINT `insurance_details_ibfk_1` FOREIGN KEY (`insurance_request_id`) REFERENCES `insurance_requests` (`insuranceID`),
+  ADD CONSTRAINT `insurance_details_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`userID`);
 
 --
 -- 資料表的限制式 `insurance_requests`
