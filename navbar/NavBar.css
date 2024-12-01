@@ -391,3 +391,57 @@ nav .wrapper {
 nav input {
   display: none;
 }
+
+/* 用戶圖標樣式 */
+.nav-icon {
+  margin-left: 15px;
+}
+
+.nav-icon a {
+  position: relative;
+  text-decoration: none;
+  color: #f2f2f2;
+  padding: 9px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-icon a:hover {
+  background: #3A3B3C;
+}
+
+.nav-icon i {
+  font-size: 18px;
+}
+
+.nav-icon .fa-user-check {
+  color: #4CAF50;
+}
+
+/* Tooltip效果 */
+.nav-icon a:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(36, 37, 38, 0.9);
+  color: #f2f2f2;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+@media screen and (max-width: 970px) {
+  .nav-icon {
+      margin: 15px 10px;
+  }
+  
+  .nav-icon a {
+      padding: 0 20px;
+      display: block;
+      font-size: 20px;
+  }
+}

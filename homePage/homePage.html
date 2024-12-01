@@ -16,17 +16,18 @@
 
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="../navbar/NavBar.css">
+    <script src="../auth.js"></script>
 </head>
 
 <body>
     <nav>
         <div class="wrapper">
-            <div class="logo"><a href="homePage.html">Legend Motor</a></div>
+            <div class="logo"><a href="../homePage/homePage.html">Legend Motor</a></div>
             <input type="radio" name="slider" id="menu-btn">
             <input type="radio" name="slider" id="close-btn">
             <ul class="nav-links">
                 <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
-                <li><a href="homePage.html">Home</a></li>
+                <li><a href="../homePage/homePage.html">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li>
                     <a href="../PurchasePage/PurchasePage.html" class="desktop-item">Vehicles</a>
@@ -49,12 +50,13 @@
                             <div class="row">
                                 <header>Insurance Quotation Request</header>
                                 <ul class="mega-links">
-                                    <li><a href="../InsuranceHomePage/InsuranceHomePage.html">Insurance Product</a></li>
-                                    <li><a href="../InsuranceHomePage/FAQ.html">Insurance FAQs</a></li>
+                                    <li><a href="../InsuranceHomePage/InsuranceHomePage.php">Insurance Product</a></li>
+                                    <li><a href="#">Insurance FAQs</a></li>
+
                                 </ul>
                             </div>
                             <div class="row">
-                            
+
                             </div>
                         </div>
                     </div>
@@ -76,8 +78,8 @@
                 </li>
 
                 <!-- Add User Icon -->
-                <li class="nav-icon">
-                    <a href="../loginPage/loginPage.html">
+                <li class="nav-icon" id="userIconContainer">
+                    <a id="userIcon">
                         <i class="fas fa-user"></i>
                     </a>
                 </li>
@@ -119,8 +121,25 @@
             </li>
         </div>
     </ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initAuthCheck();
+            
+            // 如果需要立即獲取用戶狀態
+            checkLoginStatus().then(result => {
+                if (!result.isLoggedIn) {
+                    // 處理未登入情況
+                    console.log('User not logged in');
+                    // 可以在這裡添加相應的處理邏輯
+                } else {
+                    // 處理已登入情況
+                    console.log('User logged in:', result.userData);
+                    // 可以在這裡添加相應的處理邏輯
+                }
+            });
+        });
+    </script>
     <script src="./index.js"></script>
-
 </body>
 
 </html>

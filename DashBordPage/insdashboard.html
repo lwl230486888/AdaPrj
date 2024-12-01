@@ -1,106 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insurance Application Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #007BFF;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #007BFF;
-            color: white;
-        }
-    </style>
+    <title>Staff Dashboard - Legend Motor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../DashBordPage/css/staffDashboard.css">
+    <link rel="stylesheet" href="../navbar/NavBar.css">
+    <script src="../auth.js"></script>
 </head>
+
 <body>
+    <nav>
+        <div class="wrapper">
+            <div class="logo"><a href="../homePage/homePage.html">Legend Motor</a></div>
+            <input type="radio" name="slider" id="menu-btn">
+            <input type="radio" name="slider" id="close-btn">
+            <ul class="nav-links">
+                <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                <li><a href="../homePage/homePage.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li>
+                    <a href="../PurchasePage/PurchasePage.html" class="desktop-item">Vehicles</a>
+                    <input type="checkbox" id="Vehicles">
+                    <label for="showDrop" class="mobile-item">Vehicles</label>
+                    <ul class="drop-menu">
+                        <li><a href="../PurchasePage/PurchasePage.html">Online Purchase</a></li>
+                        <li><a href="#">Vehicle Components</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="desktop-item">Insurance Services</a>
+                    <input type="checkbox" id="Insurance Services">
+                    <label for="showMega" class="mobile-item">Insurance Services</label>
+                    <div class="mega-box">
+                        <div class="content">
+                            <div class="row">
+                                <img src="./src/img4.png" alt="">
+                            </div>
+                            <div class="row">
+                                <header>Insurance Quotation Request</header>
+                                <ul class="mega-links">
+                                    <li><a href="../InsuranceHomePage/InsuranceHomePage.php">Insurance Product</a></li>
+                                    <li><a href="#">Insurance FAQs</a></li>
 
-<div class="container">
-    <h1>Insurance Application Dashboard</h1>
-    <table id="applicationsTable">
-        <thead>
-            <tr>
-                <th>Insurance ID</th>
-                <th>Vehicle Year</th>
-                <th>CC</th>
-                <th>Vehicle Model</th>
-                <th>Driver Age</th>
-                <th>Driver Occupation</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Staff ID</th>
-                <th>Customer ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be populated here -->
-        </tbody>
-    </table>
-</div>
+                                </ul>
+                            </div>
+                            <div class="row">
 
-<script>
-    // API URL
-    const apiUrl = 'get_applications.php';
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Feedback</a></li>
+                <!-- Add Shopping Cart Icon -->
+                <li class="desktop-item">
+                    <a href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <input type="checkbox" id="showMega">
+                    <label for="showMega" class="showMegaLabel"></label>
+                    <div class="mega-box">
+                        <div class="content" id="cartItemsContainer">
+                            <!-- 顧客選擇的汽車將會出現在這裡 -->
+                        </div>
+                        <button onclick="togglePopup()" class="checkout-btn">Checkout</button> <!-- Checkout 按鈕 -->
+                    </div>
+                </li>
 
-    // Fetch data from the API
-    async function fetchApplications() {
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-            const tableBody = document.querySelector('#applicationsTable tbody');
-            tableBody.innerHTML = ''; // Clear existing rows
+                <!-- Add User Icon -->
+                <li class="nav-icon" id="userIconContainer">
+                    <a id="userIcon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </li>
+            </ul>
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+        </div>
+    </nav>
 
-            // Populate the table with data
-            data.forEach(application => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${application.insuranceID}</td>
-                    <td>${application.vehicle_year}</td>
-                    <td>${application.cc}</td>
-                    <td>${application.vehicle_model}</td>
-                    <td>${application.driver_age}</td>
-                    <td>${application.driver_occupation}</td>
-                    <td>${application.phone}</td>
-                    <td>${application.email}</td>
-                    <td>${application.StaffID}</td>
-                    <td>${application.customer_id}</td>
-                `;
-                tableBody.appendChild(row);
+    <div class="dashboard-container">
+        <div class="orders-section">
+            <div class="filters">
+                <select id="orderType">
+                    <option value="all">All Orders</option>
+                    <option value="vehicle">Vehicle Orders</option>
+                    <option value="insurance">Insurance Orders</option>
+                </select>
+                <select id="orderStatus">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                </select>
+                <input type="text" id="searchOrder" placeholder="Search by Order ID or Customer Name">
+            </div>
+
+            <div class="orders-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Type</th>
+                            <th>Item</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <!-- 將由JavaScript動態填充 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 訂單詳情Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Order Details</h2>
+            <div id="orderDetails">
+                <!-- 將由JavaScript動態填充 -->
+            </div>
+            <div class="status-update">
+                <h3>Update Status</h3>
+                <select id="updateStatus">
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                </select>
+                <button id="updateStatusBtn">Update</button>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('../logout.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // 清除本地存儲的用戶資料
+                            localStorage.removeItem('user');
+                            localStorage.removeItem('customerId');
+
+                            // 重定向到首頁
+                            window.location.href = '../homePage/homePage.html';
+                        } else {
+                            alert('Logout failed. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred during logout.');
+                    });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initAuthCheck();
+
+            // 如果需要立即獲取用戶狀態
+            checkLoginStatus().then(result => {
+                if (!result.isLoggedIn) {
+                    // 處理未登入情況
+                    console.log('User not logged in');
+                    // 可以在這裡添加相應的處理邏輯
+                } else {
+                    // 處理已登入情況
+                    console.log('User logged in:', result.userData);
+                    // 可以在這裡添加相應的處理邏輯
+                }
             });
-        } catch (error) {
-            console.error('Error fetching applications:', error);
-        }
-    }
-
-    // Fetch data on page load
-    window.onload = fetchApplications;
-</script>
-
+        });
+    </script>
+    <script src="./staffDashboard.js"></script>
 </body>
+
 </html>

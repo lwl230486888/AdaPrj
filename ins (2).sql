@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-11-01 14:31:45
+-- 產生時間： 2024-12-01 07:41:38
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -33,16 +33,19 @@ CREATE TABLE `customer` (
   `lastName` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `region` varchar(50) NOT NULL
+  `region` varchar(50) NOT NULL,
+  `remember_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `customer`
 --
 
-INSERT INTO `customer` (`customer_ID`, `firstName`, `lastName`, `email`, `password`, `region`) VALUES
-(5, 'Hong', 'la', 'murikki@iCloud.com', '$2y$10$i3U9AFmNTk5ioOSnI0Xa6.eNMl2voPEiatnvMBfUb2Kx6fmZUwwLC', 'Canada'),
-(6, 'Hong', 'la', 'murikki@iCloud.com', '$2y$10$gRgJzZZUiS6s9ctcXrgP1el5kLGsqM/K1Gn5Vy2.mDW0VhS9Kl7qu', 'Canada');
+INSERT INTO `customer` (`customer_ID`, `firstName`, `lastName`, `email`, `password`, `region`, `remember_token`) VALUES
+(5, 'Hong', 'la', 'murikki@iCloud.com', '$2y$10$i3U9AFmNTk5ioOSnI0Xa6.eNMl2voPEiatnvMBfUb2Kx6fmZUwwLC', 'Canada', NULL),
+(6, 'Hong', 'la', 'murikki@iCloud.com', '$2y$10$gRgJzZZUiS6s9ctcXrgP1el5kLGsqM/K1Gn5Vy2.mDW0VhS9Kl7qu', 'Canada', NULL),
+(7, 'Wong', 'MO', 'murikki@iCloud.com', '$2y$10$mtkWarsrWxTuxY4JaJxgdODc6O3N8VGex5T9yY6NRhphrGzVVFVuK', 'Mexico', NULL),
+(8, '秉權', '黃', 'w051434@gmail.com', '$2y$10$Id5dNssAfoWrI1VXVzIGEO9hFxatclRzJvnfhsXtsjkeRwoFRZ3VO', 'Belarus', NULL);
 
 -- --------------------------------------------------------
 
@@ -61,15 +64,18 @@ CREATE TABLE `insurance_requests` (
   `phone` varchar(15) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `StaffID` int(11) DEFAULT NULL,
-  `customer_ID` int(255) DEFAULT NULL
+  `customer_ID` int(11) DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'pending',
+  `request_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `insurance_requests`
 --
 
-INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`) VALUES
-(13, '2018', '1500', 'jazz', '22', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', NULL, 12345);
+INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`, `status`, `request_date`) VALUES
+(15, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', NULL, 8, 'pending', '2024-12-01 12:43:16'),
+(16, '2018', '1500', 'jazz', '18', '33412', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'pending', '2024-12-01 13:39:34');
 
 -- --------------------------------------------------------
 
@@ -101,17 +107,19 @@ CREATE TABLE `staff` (
   `password` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `insuranceID` int(11) DEFAULT NULL,
-  `staffType` varchar(10) DEFAULT NULL
+  `staffType` varchar(10) DEFAULT NULL,
+  `remember_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `staff`
 --
 
-INSERT INTO `staff` (`userID`, `first_name`, `last_name`, `email`, `password`, `created_at`, `insuranceID`, `staffType`) VALUES
-(61, 'WONG CHAK YUEN', '黃澤元', '1@gmail.com', '$2y$10$b2Tr.tV/FVOvBnKdq/YWk.3soKu2BeeGYj2JfxnPgwImA8DEQujnq', '2024-10-12 13:09:54', NULL, 'CarStaff'),
-(62, 'WONG CHAK YUEN', '黃澤元', '2@gmail.com', '$2y$10$CEK/U2Cz4xQxV5dGfR2Gc.hvJz8DVrVCpSSlQNegWI4yZ2Q0FQcGG', '2024-10-18 03:16:28', NULL, 'CarStaff'),
-(72, 'Wong', 'Wing', 'asddd@gmail.com', '$2y$10$iYNuVzeq07XHe0KgLh3bFO2ItRgdHVGVAGiGnoz7AJcdQLQgleJGS', '2024-11-01 13:17:26', NULL, 'insuranceS');
+INSERT INTO `staff` (`userID`, `first_name`, `last_name`, `email`, `password`, `created_at`, `insuranceID`, `staffType`, `remember_token`) VALUES
+(61, 'WONG CHAK YUEN', '黃澤元', '1@gmail.com', '$2y$10$b2Tr.tV/FVOvBnKdq/YWk.3soKu2BeeGYj2JfxnPgwImA8DEQujnq', '2024-10-12 13:09:54', NULL, 'CarStaff', NULL),
+(62, 'WONG CHAK YUEN', '黃澤元', '2@gmail.com', '$2y$10$CEK/U2Cz4xQxV5dGfR2Gc.hvJz8DVrVCpSSlQNegWI4yZ2Q0FQcGG', '2024-10-18 03:16:28', NULL, 'CarStaff', NULL),
+(72, 'Wong', 'Wing', 'asddd@gmail.com', '$2y$10$iYNuVzeq07XHe0KgLh3bFO2ItRgdHVGVAGiGnoz7AJcdQLQgleJGS', '2024-11-01 13:17:26', NULL, 'insuranceS', NULL),
+(75, 'Wong', 'Wing', 'murikki@iCloud.com', '$2y$10$UIR6cA59Wu7evd8JTyX/zuePzq92.FudsXAXjmh5R8BF46pkMo86O', '2024-12-01 05:22:36', NULL, 'carSales', NULL);
 
 -- --------------------------------------------------------
 
@@ -158,7 +166,8 @@ ALTER TABLE `customer`
 -- 資料表索引 `insurance_requests`
 --
 ALTER TABLE `insurance_requests`
-  ADD PRIMARY KEY (`insuranceID`);
+  ADD PRIMARY KEY (`insuranceID`),
+  ADD KEY `fk_customer_id` (`customer_ID`);
 
 --
 -- 資料表索引 `orders`
@@ -189,13 +198,13 @@ ALTER TABLE `vehicles`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `customer_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_requests`
 --
 ALTER TABLE `insurance_requests`
-  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
@@ -207,7 +216,7 @@ ALTER TABLE `orders`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `vehicles`
@@ -218,6 +227,12 @@ ALTER TABLE `vehicles`
 --
 -- 已傾印資料表的限制式
 --
+
+--
+-- 資料表的限制式 `insurance_requests`
+--
+ALTER TABLE `insurance_requests`
+  ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_ID`) REFERENCES `customer` (`customer_ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- 資料表的限制式 `orders`

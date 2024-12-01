@@ -10,33 +10,45 @@ $dbname = "ins";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// 檢查連接
 if ($conn->connect_error) {
-    die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
+    echo json_encode(['success' => false, 'error' => 'Connection failed']);
+    exit;
 }
 
-// 基本查詢
+// 獲取篩選條件
+$type = $_GET['type'] ?? 'all';
+$status = $_GET['status'] ?? 'all';
+
+// 構建SQL查詢
 $sql = "SELECT 
             ir.*, 
             c.name as customer_name 
         FROM insurance_requests ir 
-        LEFT JOIN customer c ON ir.customer_ID = c.customer_ID";
+        LEFT JOIN customer c ON ir.customer_ID = c.customer_ID 
+        WHERE 1=1";
 
-// 執行查詢
-$result = $conn->query($sql);
+if ($type !== 'all') {
+    $sql .= " AND ir.type = ?";
+}
+
+if ($status !== 'all') {
+    $sql .= " AND ir.status = ?";
+}
+
+$sql .= " ORDER BY ir.request_date DESC";
 
 // Debug信息
 error_log("SQL Query: " . $sql);
-error_log("Number of rows: " . $result->num_rows);
 
+$result = $conn->query($sql);
 $orders = [];
-if ($result->num_rows > 0) {
+
+if ($result && $result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $orders[] = $row;
     }
 }
 
-// 輸出結果
 echo json_encode([
     'success' => true,
     'data' => $orders,
