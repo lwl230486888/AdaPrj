@@ -201,3 +201,53 @@ function checkLoginStatus() {
         };
     });
 }
+
+function checkLoginAndRedirect() {
+    fetch('../check_login_status.php', {
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.isLoggedIn) {
+            window.location.href = '../loginPage/loginPage.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error checking login status:', error);
+    });
+}
+
+// 修改提交成功後的行為
+function submitInsuranceRequest(formData) {
+    fetch('submitData.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("contactInfoForm").classList.add("hidden");
+            document.getElementById("confirmationMessage").classList.remove("hidden");
+            
+            // 添加延遲跳轉
+            setTimeout(() => {
+                goToDashboard();  // 使用上面定義的導航函數
+            }, 3000);  // 3秒後跳轉
+        } else {
+            if (data.message === "Please login first") {
+                alert('Your session has expired. Please login again.');
+                window.location.href = '../loginPage/loginPage.html';
+            } else {
+                alert(data.message);
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("Failed to submit application. Please try again later.");
+    });
+}
