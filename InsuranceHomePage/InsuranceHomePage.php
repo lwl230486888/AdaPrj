@@ -80,7 +80,7 @@
     }
     ?>
 
-    <nav>
+<nav>
         <div class="wrapper">
             <div class="logo"><a href="../homePage/homePage.html">Legend Motor</a></div>
             <input type="radio" name="slider" id="menu-btn">
@@ -138,12 +138,13 @@
                 </li>
 
                 <!-- Add User Icon -->
-                <li class="nav-icon" id="userIconContainer">
+                <li class="nav-icon" id="userIconContainer" onclick="goToDashboard()">
                     <a id="userIcon">
                         <i class="fas fa-user"></i>
                     </a>
                 </li>
             </ul>
+            <div class="nav-links">
             <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
         </div>
     </nav>
@@ -281,6 +282,21 @@
         console.log('Session data:', <?php echo json_encode($_SESSION); ?>);
         window.userLoggedIn = <?php echo json_encode($userLoggedIn); ?>;
         window.userData = <?php echo json_encode($userData); ?>;
+
+        function goToDashboard() {
+            const role = '<?php echo $_SESSION['role'] ?? ""; ?>';
+            const staffType = '<?php echo $_SESSION['staff_type'] ?? ""; ?>';
+            
+            if (role === 'staff') {
+                if (staffType === 'insuranceS') {
+                    window.location.href = '../DashBordPage/insdashboard.html';
+                } else if (staffType === 'CarStaff') {
+                    window.location.href = '../DashBordPage/cardashboard.html';
+                }
+            } else {
+                window.location.href = '../DashBordPage/dashboard.html';
+            }
+        }
     </script>
     <script src="./script.js"></script>
 </body>
