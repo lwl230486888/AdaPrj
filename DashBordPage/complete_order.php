@@ -36,18 +36,16 @@ try {
     
     $orderStatus = $result->fetch_assoc()['status'];
     if ($orderStatus !== 'accepted' && $orderStatus !== 'rejected') {
-        throw new Exception("Order can only be completed after being accepted or rejected");
+        throw new Exception("Order cannot be completed in current status");
     }
 
     // 更新狀態為 completed
     $sql = "UPDATE insurance_requests 
-            SET status = 'completed',
-                completed_date = NOW(),
-                completed_by = ?
+            SET status = 'completed' 
             WHERE insuranceID = ?";
             
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $_SESSION['userid'], $data['requestId']);
+    $stmt->bind_param("i", $data['requestId']);
 
     if (!$stmt->execute()) {
         throw new Exception("Failed to complete order");

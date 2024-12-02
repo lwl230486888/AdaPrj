@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-12-02 04:21:04
+-- 產生時間： 2024-12-01 15:08:18
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -105,20 +105,17 @@ CREATE TABLE `insurance_requests` (
   `excess_young_driver` decimal(10,2) DEFAULT NULL,
   `excess_inexperienced` decimal(10,2) DEFAULT NULL,
   `excess_unnamed` decimal(10,2) DEFAULT NULL,
-  `remarks` text DEFAULT NULL,
-  `completed_date` datetime DEFAULT NULL,
-  `completed_by` int(11) DEFAULT NULL
+  `remarks` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `insurance_requests`
 --
 
-INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`, `status`, `request_date`, `premium_amount`, `ncd_percentage`, `tppd_limit`, `tpbi_limit`, `excess_tppd`, `excess_young_driver`, `excess_inexperienced`, `excess_unnamed`, `remarks`, `completed_date`, `completed_by`) VALUES
-(15, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 12:43:16', 123.00, 12, 123.00, 123.00, 123.00, 123.00, 123.00, 123.00, '', NULL, NULL),
-(16, '2018', '1500', 'jazz', '18', '33412', '黃秉權', '67025123', 'murikki@iCloud.com', 77, 8, 'completed', '2024-12-01 13:39:34', 123321.00, 1, 123.00, 123.00, 123.00, 123.00, 2123.00, 312.00, '', NULL, NULL),
-(17, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 21:13:22', 123.00, 3, 321.00, 413.00, 1234.00, 123.00, 412.00, 312.00, '', NULL, NULL),
-(18, '2018', '1500', 'jazz', '28', '66545', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-02 11:17:39', 123654.00, 5, 1235.00, 4123.00, 5612.00, 51232.00, 2341.00, 513.00, 'ad', '2024-12-02 11:20:01', 77);
+INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`, `status`, `request_date`, `premium_amount`, `ncd_percentage`, `tppd_limit`, `tpbi_limit`, `excess_tppd`, `excess_young_driver`, `excess_inexperienced`, `excess_unnamed`, `remarks`) VALUES
+(15, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 12:43:16', 123.00, 12, 123.00, 123.00, 123.00, 123.00, 123.00, 123.00, ''),
+(16, '2018', '1500', 'jazz', '18', '33412', '黃秉權', '67025123', 'murikki@iCloud.com', 77, 8, 'completed', '2024-12-01 13:39:34', 123321.00, 1, 123.00, 123.00, 123.00, 123.00, 2123.00, 312.00, ''),
+(17, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 21:13:22', 123.00, 3, 321.00, 413.00, 1234.00, 123.00, 412.00, 312.00, '');
 
 -- --------------------------------------------------------
 
@@ -262,7 +259,7 @@ ALTER TABLE `insurance_details`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_requests`
 --
 ALTER TABLE `insurance_requests`
-  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
