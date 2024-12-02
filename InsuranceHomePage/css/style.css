@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
+body {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    align-items: center; /* 水平居中 */
+    justify-content: flex-start; /* 从顶部开始 */
+    background-color: #f7f7f7; /* 淡灰色背景 */
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%; /* 使容器宽度自适应 */
+    padding: 50px 20px; /* 增加内边距 */
+    margin: 80px auto; /* 确保容器在垂直方向上有间距，并水平居中 */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 内容居中 */
+}
+
+.hero {
+    margin-bottom: 30px;
+    transition: opacity 0.5s ease;
+}
+
+.hero h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+.hero p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+.cta-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+.form-container {
+    display: none;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #757575;
+}
+
+@media screen and (max-width: 600px) {
+    .logo {
+        font-size: 1.5rem; /* 调整字体大小 */
+        left: 20px;
+        top: 12px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    .logo {
+        font-size: 2rem; /* 调整字体大小 */
+        left: 30px;
+        top: 18px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .logo {
+        font-size: 2.5rem;
+        left: 40px;
+        top: 20px;
+    }
+}
+
+#vehicleForm {
+    max-width: 600px; /* 设置表单最大宽度 */
+    margin: 20px auto; /* 居中 */
+    padding: 20px; /* 内边距 */
+    background: #f8f9fa; /* 背景颜色 */
+    border: 2px solid #007bff; /* 边界线颜色和宽度 */
+    border-radius: 8px; /* 圆角 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}
+
+#driverInfoForm,
+#contactInfoForm {
+    background-color: #f9f9f9;
+    border: 2px solid #007bff; /* 边界线颜色和宽度 */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px; /* 每个表单组的间距 */
+}
+
+label {
+    display: block; /* 使标签显示为块级元素 */
+    margin-bottom: 5px; /* 标签与输入框之间的间距 */
+    font-weight: bold; /* 加粗标签 */
+}
+
+input[type="text"],
+input[type="email"],
+select {
+    width: 100%; /* 输入框宽度100% */
+    padding: 10px; /* 内边距 */
+    border: 1px solid #ccc; /* 边框颜色 */
+    border-radius: 5px; /* 圆角 */
+    box-sizing: border-box; /* 包括内边距和边框在内 */
+}
+
+button {
+    background-color: #007bff; /* 按钮颜色 */
+    color: white; /* 字体颜色 */
+    padding: 10px 15px; /* 按钮内边距 */
+    border: none; /* 无边框 */
+    border-radius: 5px; /* 圆角 */
+    cursor: pointer; /* 鼠标指针样式 */
+    font-size: 16px; /* 字体大小 */
+    transition: background-color 0.3s; /* 背景颜色过渡效果 */
+}
+
+button:hover {
+    background-color: #0056b3; /* 鼠标悬停时的颜色 */
+}
+
+select {
+    background-color: #f8f9fa; /* 背景颜色 */
+    appearance: none; /* 隐藏默认下拉箭头 */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><polygon points="0,0 20,0 10,10" fill="gray"/></svg>'); /* 自定义下拉箭头 */
+    background-repeat: no-repeat; /* 不重复 */
+    background-position: right 10px center; /* 位置 */
+    background-size: 12px; /* 大小 */
+}
+
+select:focus {
+    border-color: #007bff; /* 聚焦状态边框颜色 */
+    outline: none; /* 移除默认焦点轮廓 */
+}
+
+#insuranceCards {
+    display: flex; /* 使用 Flexbox */
+    justify-content: center; /* 水平居中 */
+    gap: 20px; /* 卡片之间的间距 */
+}
+
+.insurance-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+    flex: 1; /* 使卡片等分宽度 */
+    max-width: 300px; /* 设置最大宽度 */
+}
+
+.insurance-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 确认信息样式 */
+#confirmationMessage {
+    background-color: #e9ffe9;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px;
+    color: #333;
+}

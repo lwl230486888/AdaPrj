@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Legend Motor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../DashBordPage/css/staffDashboard.css">
+    <link rel="stylesheet" href="../navbar/NavBar.css">
+    <script src="../auth.js"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="wrapper">
+            <div class="logo"><a href="../homePage/homePage.html">Legend Motor</a></div>
+            <input type="radio" name="slider" id="menu-btn">
+            <input type="radio" name="slider" id="close-btn">
+            <ul class="nav-links">
+                <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                <li><a href="../homePage/homePage.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li>
+                    <a href="../PurchasePage/PurchasePage.html" class="desktop-item">Vehicles</a>
+                    <input type="checkbox" id="Vehicles">
+                    <label for="showDrop" class="mobile-item">Vehicles</label>
+                    <ul class="drop-menu">
+                        <li><a href="../PurchasePage/PurchasePage.html">Online Purchase</a></li>
+                        <li><a href="#">Vehicle Components</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="desktop-item">Insurance Services</a>
+                    <input type="checkbox" id="Insurance Services">
+                    <label for="showMega" class="mobile-item">Insurance Services</label>
+                    <div class="mega-box">
+                        <div class="content">
+                            <div class="row">
+                                <img src="../InsuranceHomePage/css/img4.png" alt="">
+                            </div>
+                            <div class="row">
+                                <header>Insurance Quotation Request</header>
+                                <ul class="mega-links">
+                                    <li><a href="../InsuranceHomePage/InsuranceHomePage.php">Insurance Product</a></li>
+                                    <li><a href="#">Insurance FAQs</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Feedback</a></li>
+                <!-- Add Shopping Cart Icon -->
+                <li class="desktop-item">
+                    <a href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <input type="checkbox" id="showMega">
+                    <label for="showMega" class="showMegaLabel"></label>
+                    <div class="mega-box">
+                        <div class="content" id="cartItemsContainer">
+                            <!-- 顧客選擇的汽車將會出現在這裡 -->
+                        </div>
+                        <button onclick="togglePopup()" class="checkout-btn">Checkout</button> <!-- Checkout 按鈕 -->
+                    </div>
+                </li>
+
+                <!-- Add User Icon -->
+                <li class="nav-icon" id="userIconContainer">
+                    <a id="userIcon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </li>
+            </ul>
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <h1>Insurance Applications Dashboard</h1>
+
+        <div class="filters">
+            <select id="orderStatus" class="filter-select">
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="accepted">Accepted</option>
+                <option value="rejected">Rejected</option>
+                <option value="completed">Completed</option>
+            </select>
+
+            <input type="text" id="searchInput" placeholder="Search by Order ID or Customer" class="search-input">
+        </div>
+
+        <div class="table-container">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Vehicle Model</th>
+                        <th>CC</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- staffDashboard.php -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="orderDetails"></div>
+        </div>
+    </div>
+    <script>
+
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('../logout.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // 清除本地存儲的用戶資料
+                            localStorage.removeItem('user');
+                            localStorage.removeItem('customerId');
+
+                            // 重定向到首頁
+                            window.location.href = '../homePage/homePage.html';
+                        } else {
+                            alert('Logout failed. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred during logout.');
+                    });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initAuthCheck();
+
+            // 如果需要立即獲取用戶狀態
+            checkLoginStatus().then(result => {
+                if (!result.isLoggedIn) {
+                    // 處理未登入情況
+                    console.log('User not logged in');
+                    // 可以在這裡添加相應的處理邏輯
+                } else {
+                    // 處理已登入情況
+                    console.log('User logged in:', result.userData);
+                    // 可以在這裡添加相應的處理邏輯
+                }
+            });
+        });
+    </script>
+    <script src="./staffDashboard.js"></script>
+</body>
+
+</html>
