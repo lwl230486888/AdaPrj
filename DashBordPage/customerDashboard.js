@@ -3,10 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     loadOrders();
     
     // 綁定篩選事件
+    const orderType = document.getElementById('orderType');
     const orderStatus = document.getElementById('orderStatus');
-    if (orderStatus) {
-        orderStatus.addEventListener('change', loadOrders);
-    }
+    
+    if (orderType) orderType.addEventListener('change', loadOrders);
+    if (orderStatus) orderStatus.addEventListener('change', loadOrders);
 
     // 綁定 Modal 關閉按鈕
     const closeBtn = document.querySelector('.close');
@@ -27,20 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadOrders() {
     console.log('Loading customer orders...');
+    
+    const type = document.getElementById('orderType')?.value || 'all';
     const status = document.getElementById('orderStatus')?.value || 'all';
-    
-    const container = document.querySelector('.orders-container');
-    if (!container) {
-        console.error('Orders container not found');
-        return;
-    }
-    
-    container.innerHTML = '<div class="loading">Loading orders...</div>';
 
-    fetch(`get_customer_orders.php?status=${status}`)
+    fetch(`get_customer_orders.php?type=${type}&status=${status}`)
         .then(response => response.json())
         .then(response => {
             console.log('Received data:', response);
+            
+            const container = document.querySelector('.orders-container');
+            if (!container) {
+                console.error('Orders container not found');
+                return;
+            }
+            
             container.innerHTML = '';
 
             if (!response.success || !response.data || response.data.length === 0) {
@@ -53,14 +55,13 @@ function loadOrders() {
             }
 
             response.data.forEach(order => {
-                const statusText = getStatusText(order.status);
                 const card = document.createElement('div');
                 card.className = 'order-card';
                 card.innerHTML = `
                     <div class="order-header">
-                        <h3>Insurance Request #${order.insuranceID}</h3>
-                        <span class="status-badge status-${order.status.toLowerCase()}">
-                            ${statusText}
+                        <h3>Insurance Request</h3>
+                        <span class="status-badge status-${(order.status || 'pending').toLowerCase()}">
+                            ${order.status || 'Pending'}
                         </span>
                     </div>
                     <div class="order-details">
@@ -77,11 +78,14 @@ function loadOrders() {
         })
         .catch(error => {
             console.error('Error:', error);
-            container.innerHTML = `
-                <div class="error-message">
-                    Error loading orders. Please try again.
-                </div>
-            `;
+            const container = document.querySelector('.orders-container');
+            if (container) {
+                container.innerHTML = `
+                    <div class="error-message">
+                        Error loading orders. Please try again.
+                    </div>
+                `;
+            }
         });
 }
 
@@ -96,6 +100,7 @@ function viewOrderDetails(orderId) {
         return;
     }
 
+    // 顯示 loading 狀態
     detailsContainer.innerHTML = '<div class="loading">Loading...</div>';
     modal.style.display = 'block';
 
@@ -107,18 +112,12 @@ function viewOrderDetails(orderId) {
             }
 
             const order = response.data;
-            const statusText = getStatusText(order.status);
-            
             let html = `
                 <div class="insurance-quotation">
                     <h2>Insurance Application Details</h2>
                     
                     <div class="section">
                         <h3>Basic Information</h3>
-                        <div class="detail-row">
-                            <label>Application ID:</label>
-                            <span>#${order.insuranceID}</span>
-                        </div>
                         <div class="detail-row">
                             <label>Vehicle Model:</label>
                             <span>${order.vehicle_model || 'N/A'}</span>
@@ -134,12 +133,12 @@ function viewOrderDetails(orderId) {
                         <div class="detail-row">
                             <label>Status:</label>
                             <span class="status-badge status-${order.status.toLowerCase()}">
-                                ${statusText}
+                                ${order.status}
                             </span>
                         </div>
                     </div>
 
-                    ${order.status !== 'pending' ? `
+                    ${order.premium_amount ? `
                         <div class="section">
                             <h3>Quote Details</h3>
                             <div class="detail-row">
@@ -178,28 +177,15 @@ function viewOrderDetails(orderId) {
                             </div>
                         </div>
 
-                        ${order.remarks ? `
-                            <div class="section">
-                                <h3>Remarks</h3>
-                                <div class="remarks">
-                                    ${order.remarks}
-                                </div>
-                            </div>
-                        ` : ''}
-
                         ${order.status === 'processing' ? `
                             <div class="action-buttons">
-                                <button onclick="rejectQuote(${order.insuranceID})" class="btn-reject">
-                                    Reject Quote
-                                </button>
-                                <button onclick="acceptQuote(${order.insuranceID})" class="btn-accept">
-                                    Accept Quote
-                                </button>
+                                <button onclick="rejectQuote(${order.insuranceID})" class="btn-reject">Reject Quote</button>
+                                <button onclick="acceptQuote(${order.insuranceID})" class="btn-accept">Accept Quote</button>
                             </div>
                         ` : ''}
                     ` : `
-                        <div class="section pending-message">
-                            <p>Your application is being reviewed. We will provide a quote soon.</p>
+                        <div class="no-quote">
+                            <p>Your application is being processed. Please check back later.</p>
                         </div>
                     `}
                 </div>
@@ -217,15 +203,22 @@ function viewOrderDetails(orderId) {
         });
 }
 
-function getStatusText(status) {
-    switch(status.toLowerCase()) {
-        case 'pending': return 'Pending Review';
-        case 'processing': return 'Quote Ready';
-        case 'accepted': return 'Quote Accepted';
-        case 'rejected': return 'Quote Rejected';
-        case 'completed': return 'Completed';
-        default: return status;
-    }
+function formatDate(dateString) {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-HK', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+}
+
+function formatCurrency(amount) {
+    if (!amount) return '0.00';
+    return parseFloat(amount).toLocaleString('en-HK', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 }
 
 function acceptQuote(orderId) {
@@ -281,23 +274,5 @@ function rejectQuote(orderId) {
     .catch(error => {
         console.error('Error:', error);
         alert('Error rejecting quote: ' + error.message);
-    });
-}
-
-function formatDate(dateString) {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-HK', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
-}
-
-function formatCurrency(amount) {
-    if (!amount) return '0.00';
-    return parseFloat(amount).toLocaleString('en-HK', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
     });
 }
