@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-12-02 13:59:45
+-- 產生時間： 2024-12-02 15:28:22
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -100,7 +100,9 @@ INSERT INTO `insurance_messages` (`message_id`, `insurance_id`, `sender_type`, `
 (1, 19, 'customer', 8, 'dsa', '2024-12-02 12:28:51'),
 (2, 19, 'staff', 77, 'ddssa', '2024-12-02 12:29:09'),
 (3, 19, 'staff', 77, 'ddd', '2024-12-02 12:37:59'),
-(4, 19, 'customer', 8, '大樹', '2024-12-02 12:57:16');
+(4, 19, 'customer', 8, '大樹', '2024-12-02 12:57:16'),
+(5, 25, 'customer', 8, '大樹', '2024-12-02 14:06:35'),
+(6, 23, 'staff', 77, '大樹', '2024-12-02 14:07:09');
 
 -- --------------------------------------------------------
 
@@ -136,7 +138,16 @@ INSERT INTO `insurance_plans` (`plan_id`, `insurance_id`, `template_id`, `premiu
 (6, 20, 3, 23400.00, 20, 500000.00, 5000000.00, 1000.00, 3000.00, 2000.00, 2000.00, '2024-12-02 12:14:12'),
 (7, 19, 1, 8450.00, 0, 100000.00, 1000000.00, 2000.00, 5000.00, 3000.00, 3000.00, '2024-12-02 12:16:26'),
 (8, 19, 2, 13520.00, 10, 200000.00, 2000000.00, 1500.00, 4000.00, 2500.00, 2500.00, '2024-12-02 12:16:27'),
-(9, 19, 3, 20280.00, 20, 500000.00, 5000000.00, 1000.00, 3000.00, 2000.00, 2000.00, '2024-12-02 12:16:27');
+(9, 19, 3, 20280.00, 20, 500000.00, 5000000.00, 1000.00, 3000.00, 2000.00, 2000.00, '2024-12-02 12:16:27'),
+(10, 22, 1, 8450.00, 0, 100000.00, 1000000.00, 2000.00, 5000.00, 3000.00, 3000.00, '2024-12-02 13:52:14'),
+(11, 22, 2, 13520.00, 10, 200000.00, 2000000.00, 1500.00, 4000.00, 2500.00, 2500.00, '2024-12-02 13:52:14'),
+(12, 22, 3, 20280.00, 20, 500000.00, 5000000.00, 1000.00, 3000.00, 2000.00, 2000.00, '2024-12-02 13:52:14'),
+(13, 25, 1, 9750.00, 0, 100000.00, 1000000.00, 2000.00, 5000.00, 3000.00, 3000.00, '2024-12-02 14:04:21'),
+(14, 25, 2, 15600.00, 10, 200000.00, 2000000.00, 1500.00, 4000.00, 2500.00, 2500.00, '2024-12-02 14:04:21'),
+(15, 25, 3, 23400.00, 20, 500000.00, 5000000.00, 1000.00, 3000.00, 2000.00, 2000.00, '2024-12-02 14:04:21'),
+(16, 24, 1, 9750.00, 0, 100000.00, 1000000.00, 2000.00, 5000.00, 3000.00, 3000.00, '2024-12-02 14:07:05'),
+(17, 24, 2, 15600.00, 10, 200000.00, 2000000.00, 1500.00, 4000.00, 2500.00, 2500.00, '2024-12-02 14:07:05'),
+(18, 24, 3, 23400.00, 20, 500000.00, 5000000.00, 1000.00, 3000.00, 2000.00, 2000.00, '2024-12-02 14:07:05');
 
 -- --------------------------------------------------------
 
@@ -201,21 +212,27 @@ CREATE TABLE `insurance_requests` (
   `remarks` text DEFAULT NULL,
   `completed_date` datetime DEFAULT NULL,
   `completed_by` int(11) DEFAULT NULL,
-  `selected_plan_id` int(11) DEFAULT NULL
+  `selected_plan_id` int(11) DEFAULT NULL,
+  `plan_selected_date` datetime DEFAULT NULL,
+  `rejected_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `insurance_requests`
 --
 
-INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`, `status`, `request_date`, `premium_amount`, `ncd_percentage`, `tppd_limit`, `tpbi_limit`, `excess_tppd`, `excess_young_driver`, `excess_inexperienced`, `excess_unnamed`, `remarks`, `completed_date`, `completed_by`, `selected_plan_id`) VALUES
-(15, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 12:43:16', 123.00, 12, 123.00, 123.00, 123.00, 123.00, 123.00, 123.00, '', NULL, NULL, NULL),
-(16, '2018', '1500', 'jazz', '18', '33412', '黃秉權', '67025123', 'murikki@iCloud.com', 77, 8, 'completed', '2024-12-01 13:39:34', 123321.00, 1, 123.00, 123.00, 123.00, 123.00, 2123.00, 312.00, '', NULL, NULL, NULL),
-(17, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 21:13:22', 123.00, 3, 321.00, 413.00, 1234.00, 123.00, 412.00, 312.00, '', NULL, NULL, NULL),
-(18, '2018', '1500', 'jazz', '28', '66545', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-02 11:17:39', 123654.00, 5, 1235.00, 4123.00, 5612.00, 51232.00, 2341.00, 513.00, 'ad', '2024-12-02 11:20:01', 77, NULL),
-(19, '2018', '1500', 'jazz', '25', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', NULL, 8, 'processing', '2024-12-02 19:38:48', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(20, '2018', '1500', 'jazz', '24', 'student', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'processing', '2024-12-02 19:44:41', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(21, '2018', '1500', 'jazz', '25', 'student', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'processing', '2024-12-02 20:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `insurance_requests` (`insuranceID`, `vehicle_year`, `cc`, `vehicle_model`, `driver_age`, `driver_occupation`, `name`, `phone`, `email`, `StaffID`, `customer_ID`, `status`, `request_date`, `premium_amount`, `ncd_percentage`, `tppd_limit`, `tpbi_limit`, `excess_tppd`, `excess_young_driver`, `excess_inexperienced`, `excess_unnamed`, `remarks`, `completed_date`, `completed_by`, `selected_plan_id`, `plan_selected_date`, `rejected_at`) VALUES
+(15, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 12:43:16', 123.00, 12, 123.00, 123.00, 123.00, 123.00, 123.00, 123.00, '', NULL, NULL, NULL, NULL, NULL),
+(16, '2018', '1500', 'jazz', '18', '33412', '黃秉權', '67025123', 'murikki@iCloud.com', 77, 8, 'completed', '2024-12-01 13:39:34', 123321.00, 1, 123.00, 123.00, 123.00, 123.00, 2123.00, 312.00, '', NULL, NULL, NULL, NULL, NULL),
+(17, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-01 21:13:22', 123.00, 3, 321.00, 413.00, 1234.00, 123.00, 412.00, 312.00, '', NULL, NULL, NULL, NULL, NULL),
+(18, '2018', '1500', 'jazz', '28', '66545', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', 77, 8, 'completed', '2024-12-02 11:17:39', 123654.00, 5, 1235.00, 4123.00, 5612.00, 51232.00, 2341.00, 513.00, 'ad', '2024-12-02 11:20:01', 77, NULL, NULL, NULL),
+(19, '2018', '1500', 'jazz', '25', 'student', 'Wong Chun Wing', '67002314', 'asddd@gmail.com', NULL, 8, 'processing', '2024-12-02 19:38:48', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, '2018', '1500', 'jazz', '24', 'student', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'processing', '2024-12-02 19:44:41', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, '2018', '1500', 'jazz', '25', 'student', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'processing', '2024-12-02 20:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, '2018', '1500', 'jazz', '25', 'student', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'rejected', '2024-12-02 21:25:10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10, NULL, NULL),
+(23, '2018', '1500', 'jazz', '25', 'student', '黃秉權', '67025123', 'murikki@iCloud.com', NULL, 8, 'pending', '2024-12-02 21:25:10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(24, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67025123', 'w051434@gmail.com', NULL, 8, 'accepted', '2024-12-02 21:34:21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16, NULL, NULL),
+(25, '2018', '1500', 'jazz', '18', 'student', 'Wong Chun Wing', '67025123', 'w051434@gmail.com', NULL, 8, 'completed', '2024-12-02 21:34:21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-12-02 22:14:14', NULL, 15, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -381,13 +398,13 @@ ALTER TABLE `insurance_details`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_messages`
 --
 ALTER TABLE `insurance_messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_plans`
 --
 ALTER TABLE `insurance_plans`
-  MODIFY `plan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `plan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_plan_templates`
@@ -399,7 +416,7 @@ ALTER TABLE `insurance_plan_templates`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `insurance_requests`
 --
 ALTER TABLE `insurance_requests`
-  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `insuranceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
