@@ -1,49 +1,63 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ins";
+// Debug log
+error_log("Session data in get_customer_orders: " . print_r($_SESSION, true));
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// 檢查連接
-if ($conn->connect_error) {
-    die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
-}
-
-// 獲取當前登入的客戶ID
-$customer_id = $_SESSION['userid'] ?? null;
-
-// Debug信息
-error_log("Customer ID: " . $customer_id);
-
-// 基本查詢
-$sql = "SELECT * FROM insurance_requests WHERE customer_ID = '$customer_id'";
-
-// 執行查詢
-$result = $conn->query($sql);
-
-// Debug信息
-error_log("SQL Query: " . $sql);
-error_log("Number of rows: " . $result->num_rows);
-
-$orders = [];
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $orders[] = $row;
+try {
+    // 檢查 session
+    if (!isset($_SESSION['user_id'])) {
+        throw new Exception('Please login first');
     }
+
+    $customerId = $_SESSION['user_id'];
+    error_log("Fetching orders for customer ID: " . $customerId);
+
+    $conn = new mysqli("localhost", "root", "", "ins");
+    $conn->set_charset("utf8mb4");
+
+    if ($conn->connect_error) {
+        throw new Exception("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM insurance_requests WHERE customer_ID = ? ORDER BY request_date DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $customerId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    error_log("Found " . $result->num_rows . " orders");
+
+    $orders = [];
+    while ($row = $result->fetch_assoc()) {
+        $orders[] = [
+            'insuranceID' => $row['insuranceID'],
+            'request_date' => $row['request_date'],
+            'vehicle_model' => $row['vehicle_model'],
+            'cc' => $row['cc'],
+            'status' => $row['status'],
+            'driver_age' => $row['driver_age'],
+            'driver_occupation' => $row['driver_occupation']
+        ];
+    }
+
+    echo json_encode([
+        'success' => true,
+        'data' => $orders
+    ]);
+
+} catch (Exception $e) {
+    error_log("Error in get_customer_orders: " . $e->getMessage());
+    http_response_code($e->getMessage() === 'Please login first' ? 401 : 500);
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
+} finally {
+    if (isset($stmt)) $stmt->close();
+    if (isset($conn)) $conn->close();
 }
-
-// 輸出結果
-echo json_encode([
-    'success' => true,
-    'data' => $orders,
-    'count' => count($orders)
-]);
-
-$conn->close();
 ?>
