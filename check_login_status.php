@@ -1,29 +1,30 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-function checkLoginStatus() {
+error_log('Session data in check_login_status: ' . print_r($_SESSION, true));
+
+$response = [
+    'isLoggedIn' => false,
+    'userType' => '',
+    'userName' => '',
+    'userId' => '',
+    'email' => ''
+];
+
+// 改用 user_id
+if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
     $response = [
-        'isLoggedIn' => false,
-        'userType' => '',
-        'userName' => '',
-        'userId' => '',
-        'email' => ''
+        'isLoggedIn' => true,
+        'userType' => $_SESSION['role'] ?? 'customer',
+        'userName' => $_SESSION['name'] ?? '',
+        'userId' => $_SESSION['user_id'],  // 使用 user_id
+        'email' => $_SESSION['email'] ?? ''
     ];
-
-    if (isset($_SESSION['userid']) && !empty($_SESSION['userid'])) {
-        $response['isLoggedIn'] = true;
-        $response['userType'] = $_SESSION['role'] ?? 'customer';
-        $response['userName'] = $_SESSION['name'] ?? '';
-        $response['userId'] = $_SESSION['userid'];
-        $response['email'] = $_SESSION['email'] ?? '';
-    }
-
-    return $response;
 }
 
-// 如果直接訪問這個文件，返回JSON響應
-if (basename($_SERVER['PHP_SELF']) == 'check_login_status.php') {
-    echo json_encode(checkLoginStatus());
-}
+error_log('Response data: ' . print_r($response, true));
+echo json_encode($response);
 ?>
