@@ -4,13 +4,15 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Debug log
-error_log("Session data in get_customer_orders: " . print_r($_SESSION, true));
-
 try {
-    // 檢查 session
+    // 改用 user_id
     if (!isset($_SESSION['user_id'])) {
         throw new Exception('Please login first');
+    }
+
+    // 檢查角色
+    if ($_SESSION['role'] !== 'customer') {
+        throw new Exception('Unauthorized access');
     }
 
     $customerId = $_SESSION['user_id'];
@@ -28,8 +30,6 @@ try {
     $stmt->bind_param("i", $customerId);
     $stmt->execute();
     $result = $stmt->get_result();
-
-    error_log("Found " . $result->num_rows . " orders");
 
     $orders = [];
     while ($row = $result->fetch_assoc()) {
@@ -51,7 +51,6 @@ try {
 
 } catch (Exception $e) {
     error_log("Error in get_customer_orders: " . $e->getMessage());
-    http_response_code($e->getMessage() === 'Please login first' ? 401 : 500);
     echo json_encode([
         'success' => false,
         'error' => $e->getMessage()

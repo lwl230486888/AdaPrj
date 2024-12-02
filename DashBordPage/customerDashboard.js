@@ -36,28 +36,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadOrders() {
-    console.log('Loading customer orders...');
     const status = document.getElementById('orderStatus')?.value || 'all';
-    
     const container = document.querySelector('.orders-container');
-    if (!container) {
-        console.error('Orders container not found');
-        return;
-    }
+    if (!container) return;
     
     container.innerHTML = '<div class="loading">Loading orders...</div>';
 
-    fetch(`get_customer_orders.php?status=${status}`)
+    fetch('./get_customer_orders.php')
         .then(response => {
-            console.log('Response status:', response.status);
-            if (response.status === 401) {
-                window.location.href = '../login/loginPage.html';
-                throw new Error('Please login first');
+            if (!response.ok) {
+                if (response.status === 401) {
+                    window.location.href = '../loginPage/loginPage.html';
+                    throw new Error('Please login first');
+                }
+                throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(response => {
-            console.log('Received data:', response);
+            console.log('Received data:', response); // Debug log
 
             if (!response.success) {
                 throw new Error(response.error || 'Failed to load orders');
@@ -114,14 +111,12 @@ function loadOrders() {
             });
         })
         .catch(error => {
-            if (error.message !== 'Please login first') {
-                console.error('Error:', error);
-                container.innerHTML = `
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-circle"></i>
-                        Error loading orders: ${error.message}
-                    </div>`;
-            }
+            console.error('Error:', error);
+            container.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Error loading orders: ${error.message}
+                </div>`;
         });
 }
 
@@ -143,11 +138,11 @@ function viewOrderDetails(orderId) {
         </div>`;
     modal.style.display = 'block';
 
-    fetch(`get_order_details.php?id=${orderId}`)
+    fetch(`./get_order_details.php?id=${orderId}`)  // 改用相對路徑
         .then(response => {
             if (!response.ok) {
                 if (response.status === 401) {
-                    window.location.href = '../login/loginPage.html';
+                    window.location.href = '../loginPage/loginPage.html';
                     throw new Error('Please login first');
                 }
                 throw new Error('Network response was not ok');
@@ -322,21 +317,34 @@ function selectPlan(orderId, planId) {
         return;
     }
 
-    fetch('select_plan.php', {
+    // 修正 fetch 路徑
+    fetch('./select_plan.php', {  // 或者用 '../DashBordpage/select_plan.php'
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json'  // 加入呢行
         },
         body: JSON.stringify({
             requestId: orderId,
             planId: planId
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        // 加入 response status 檢查
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.error || 'Failed to select plan');
+            });
+        }
+        return response.json();
+    })
     .then(result => {
+        console.log('Success:', result);
         if (result.success) {
             showNotification('Plan selected successfully', 'success');
             viewOrderDetails(orderId);
+            loadOrders();
         } else {
             throw new Error(result.error || 'Failed to select plan');
         }
@@ -398,14 +406,23 @@ function acceptQuote(orderId) {
         return;
     }
 
-    fetch('accept_quote.php', {
+    fetch('./accept_quote.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ requestId: orderId })
+        body: JSON.stringify({
+            requestId: orderId
+        })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.error || 'Failed to accept quote');
+            });
+        }
+        return response.json();
+    })
     .then(result => {
         if (result.success) {
             showNotification('Quote accepted successfully', 'success');
@@ -417,7 +434,7 @@ function acceptQuote(orderId) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('Error accepting quote: ' + error.message, 'error');
+        showNotification(error.message, 'error');
     });
 }
 
@@ -426,26 +443,35 @@ function rejectQuote(orderId) {
         return;
     }
 
-    fetch('reject_quote.php', {
+    fetch('./reject_quote.php', {  // 確保路徑正確
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ requestId: orderId })
+        body: JSON.stringify({
+            requestId: orderId
+        })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.error || 'Failed to reject quote');
+            });
+        }
+        return response.json();
+    })
     .then(result => {
         if (result.success) {
             showNotification('Quote rejected successfully', 'success');
             document.getElementById('orderModal').style.display = 'none';
-            loadOrders();
+            loadOrders();  // 重新載入訂單列表
         } else {
             throw new Error(result.error || 'Failed to reject quote');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('Error rejecting quote: ' + error.message, 'error');
+        showNotification(error.message, 'error');
     });
 }
 

@@ -166,21 +166,21 @@ function viewOrderDetails(orderId) {
                         </div>
                     </div>`;
 
-            // 如果係 pending 狀態，顯示自動報價按鈕
+            // 如果係 pending 狀態，顯示生成報價按鈕
             if (order.status === 'pending') {
                 html += `
                     <div class="section">
                         <h3>Quote Generation</h3>
-                        <p>Generate quotes automatically based on the application details.</p>
                         <div class="quote-actions">
                             <button onclick="generateQuotes(${order.insuranceID})" class="btn-generate">
                                 Generate Quotes
                             </button>
                         </div>
                     </div>`;
-            } 
+            }
+
             // 如果已經有計劃，顯示計劃詳情
-            else if (order.plans && order.plans.length > 0) {
+            if (order.plans && order.plans.length > 0) {
                 html += `
                     <div class="section">
                         <h3>Insurance Plans</h3>
@@ -266,6 +266,7 @@ function viewOrderDetails(orderId) {
                     </div>
                 </div>`;
 
+            // 如果訂單已接受或拒絕，顯示完成按鈕
             if (order.status === 'accepted' || order.status === 'rejected') {
                 html += `
                     <div class="action-buttons">
@@ -279,6 +280,7 @@ function viewOrderDetails(orderId) {
             
             detailsContainer.innerHTML = html;
 
+            // 滾動訊息到最底
             const messagesContainer = document.getElementById('messagesContainer');
             if (messagesContainer) {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;

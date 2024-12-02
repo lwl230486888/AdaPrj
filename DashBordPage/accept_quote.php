@@ -4,47 +4,69 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'customer') {
-    echo json_encode(['success' => false, 'error' => 'Unauthorized access']);
-    exit;
-}
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ins";
-
 try {
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    if (!isset($_SESSION['user_id'])) {
+        throw new Exception('Please login first');
+    }
+
+    if ($_SESSION['role'] !== 'customer') {
+        throw new Exception('Unauthorized access');
+    }
+
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    if (!isset($data['requestId'])) {
+        throw new Exception("Request ID is required");
+    }
+
+    $conn = new mysqli("localhost", "root", "", "ins");
+    $conn->set_charset("utf8mb4");
 
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
 
-    $data = json_decode(file_get_contents('php://input'), true);
+    // 檢查訂單狀態同埋所選計劃
+    $checkSql = "SELECT ir.status, ir.selected_plan_id 
+                FROM insurance_requests ir
+                WHERE ir.insuranceID = ? 
+                AND ir.customer_ID = ?";
     
-    // 先檢查訂單狀態係咪 processing
-    $checkSql = "SELECT status FROM insurance_requests 
-                WHERE insuranceID = ? AND customer_ID = ? AND status = 'processing'";
     $checkStmt = $conn->prepare($checkSql);
-    $checkStmt->bind_param("ii", $data['requestId'], $_SESSION['userid']);
+    $checkStmt->bind_param("ii", $data['requestId'], $_SESSION['user_id']);
     $checkStmt->execute();
     $result = $checkStmt->get_result();
 
     if ($result->num_rows === 0) {
-        throw new Exception("Quote not found or cannot be accepted in current status");
+        throw new Exception("Order not found");
     }
 
-    // 更新狀態為 accepted
-    $sql = "UPDATE insurance_requests 
-            SET status = 'accepted' 
-            WHERE insuranceID = ? AND customer_ID = ?";
-            
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $data['requestId'], $_SESSION['userid']);
+    $order = $result->fetch_assoc();
 
-    if (!$stmt->execute()) {
+    if (!$order['selected_plan_id']) {
+        throw new Exception("No plan selected for this order");
+    }
+
+    if ($order['status'] !== 'processing') {
+        throw new Exception("Quote cannot be accepted in current status: " . $order['status']);
+    }
+
+    // 移除 accepted_date 欄位，只更新狀態
+    $updateSql = "UPDATE insurance_requests 
+                  SET status = 'accepted'
+                  WHERE insuranceID = ? 
+                  AND customer_ID = ?
+                  AND status = 'processing'";
+                  
+    $updateStmt = $conn->prepare($updateSql);
+    $updateStmt->bind_param("ii", $data['requestId'], $_SESSION['user_id']);
+
+    if (!$updateStmt->execute()) {
         throw new Exception("Failed to accept quote");
+    }
+
+    if ($updateStmt->affected_rows === 0) {
+        throw new Exception("No changes made to the order");
     }
 
     echo json_encode([
@@ -60,7 +82,7 @@ try {
     ]);
 } finally {
     if (isset($checkStmt)) $checkStmt->close();
-    if (isset($stmt)) $stmt->close();
+    if (isset($updateStmt)) $updateStmt->close();
     if (isset($conn)) $conn->close();
 }
 ?>
