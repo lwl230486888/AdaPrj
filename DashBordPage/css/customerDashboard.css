@@ -692,3 +692,144 @@ h1 {
     border-radius: 4px;
     margin: 20px 0;
 }
+
+/* Insurance Plans Grid Layout */
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* Plan Card Styles */
+.plan-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.plan-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.plan-card.selected {
+    border: 2px solid #4CAF50;
+}
+
+/* Plan Header */
+.plan-header {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.plan-header h4 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.plan-price {
+    margin: 15px 0;
+}
+
+.plan-price .currency {
+    font-size: 1.2em;
+    vertical-align: top;
+}
+
+.plan-price .amount {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.ncd-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+/* Plan Content */
+.plan-content {
+    padding: 20px;
+}
+
+.plan-section {
+    margin-bottom: 20px;
+}
+
+.plan-section h5 {
+    color: #333;
+    font-size: 1.1em;
+    margin: 0 0 10px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.plan-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 0.95em;
+}
+
+.plan-item label {
+    color: #666;
+}
+
+.plan-item span {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Plan Actions */
+.plan-actions {
+    padding-top: 15px;
+    text-align: center;
+}
+
+.btn-select {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-select:hover {
+    background: #388E3C;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .plan-card {
+        margin: 10px 0;
+    }
+}
+
+/* Different Plan Types Colors */
+.plan-card:nth-child(1) .plan-header {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+}
+
+.plan-card:nth-child(2) .plan-header {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+}
+
+.plan-card:nth-child(3) .plan-header {
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+}

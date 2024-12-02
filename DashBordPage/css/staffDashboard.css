@@ -463,3 +463,267 @@ h1 {
     background-color: #138496;
 }
 
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    min-width: 300px;
+    max-width: 400px;
+    padding: 16px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 9999;
+    animation: slideIn 0.3s ease-out;
+    border-left: 4px solid #2196F3;
+}
+
+/* 不同類型嘅通知樣式 */
+.notification.success {
+    border-left-color: #4CAF50;
+}
+
+.notification.error {
+    border-left-color: #f44336;
+}
+
+.notification.warning {
+    border-left-color: #ff9800;
+}
+
+.notification-content {
+    flex-grow: 1;
+    margin-right: 12px;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* 關閉按鈕樣式 */
+.notification-close {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.notification-close:hover {
+    color: #333;
+}
+
+/* 不同類型通知嘅圖示 */
+.notification::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.notification.success::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");
+}
+
+.notification.error::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f44336'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z'/%3E%3C/svg%3E");
+}
+
+.notification.warning::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff9800'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+}
+
+/* 動畫效果 */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.notification.fade-out {
+    animation: slideOut 0.3s ease-out forwards;
+}
+
+/* 多個通知堆疊效果 */
+.notification + .notification {
+    margin-top: 10px;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 480px) {
+    .notification {
+        min-width: auto;
+        max-width: calc(100vw - 40px);
+        margin: 0 10px;
+    }
+}
+
+/* Insurance Plans Grid Layout */
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* Plan Card Styles */
+.plan-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.plan-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.plan-card.selected {
+    border: 2px solid #4CAF50;
+}
+
+/* Plan Header */
+.plan-header {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.plan-header h4 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.plan-price {
+    margin: 15px 0;
+}
+
+.plan-price .currency {
+    font-size: 1.2em;
+    vertical-align: top;
+}
+
+.plan-price .amount {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.ncd-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+/* Plan Content */
+.plan-content {
+    padding: 20px;
+}
+
+.plan-section {
+    margin-bottom: 20px;
+}
+
+.plan-section h5 {
+    color: #333;
+    font-size: 1.1em;
+    margin: 0 0 10px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.plan-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 0.95em;
+}
+
+.plan-item label {
+    color: #666;
+}
+
+.plan-item span {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Plan Actions */
+.plan-actions {
+    padding-top: 15px;
+    text-align: center;
+}
+
+.btn-select {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-select:hover {
+    background: #388E3C;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .plan-card {
+        margin: 10px 0;
+    }
+}
+
+/* Different Plan Types Colors */
+.plan-card:nth-child(1) .plan-header {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+}
+
+.plan-card:nth-child(2) .plan-header {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+}
+
+.plan-card:nth-child(3) .plan-header {
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+}
