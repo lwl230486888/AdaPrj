@@ -4,10 +4,8 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Debug log
-error_log("Session data in get_order_details: " . print_r($_SESSION, true));
-
 try {
+    // 檢查登入狀態同角色
     if (!isset($_SESSION['user_id'])) {
         throw new Exception('Please login first');
     }
@@ -24,15 +22,37 @@ try {
         throw new Exception("Order ID is required");
     }
 
-    // Debug log
-    error_log("Getting order details for ID: " . $orderId . ", User ID: " . $_SESSION['user_id']);
+    // 根據角色決定 SQL 查詢
+    if ($_SESSION['role'] === 'customer') {
+        // 客戶只能睇自己嘅訂單
+        $sql = "SELECT ir.*, 
+                c.firstName,
+                c.lastName,
+                c.email,
+                c.region,
+                CONCAT(c.firstName, ' ', c.lastName) as customer_name
+                FROM insurance_requests ir 
+                LEFT JOIN customer c ON ir.customer_ID = c.customer_ID 
+                WHERE ir.insuranceID = ? AND ir.customer_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $orderId, $_SESSION['user_id']);
+    } else if ($_SESSION['role'] === 'staff' && $_SESSION['staff_type'] === 'insuranceS') {
+        // 保險員工可以睇所有訂單
+        $sql = "SELECT ir.*, 
+                c.firstName,
+                c.lastName,
+                c.email,
+                c.region,
+                CONCAT(c.firstName, ' ', c.lastName) as customer_name
+                FROM insurance_requests ir 
+                LEFT JOIN customer c ON ir.customer_ID = c.customer_ID 
+                WHERE ir.insuranceID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $orderId);
+    } else {
+        throw new Exception('Unauthorized access');
+    }
 
-    // 使用正確嘅欄位名稱
-    $sql = "SELECT ir.* FROM insurance_requests ir 
-            WHERE ir.insuranceID = ? AND ir.customer_ID = ?";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $orderId, $_SESSION['user_id']);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -72,9 +92,6 @@ try {
     while ($message = $messagesResult->fetch_assoc()) {
         $order['messages'][] = $message;
     }
-
-    // Debug log
-    error_log("Order details found: " . print_r($order, true));
 
     echo json_encode([
         'success' => true,
