@@ -23,9 +23,21 @@ try {
 
     $data = json_decode(file_get_contents('php://input'), true);
     
-    // 確保訂單屬於當前客戶
+    // 先檢查訂單狀態係咪 processing
+    $checkSql = "SELECT status FROM insurance_requests 
+                WHERE insuranceID = ? AND customer_ID = ? AND status = 'processing'";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("ii", $data['requestId'], $_SESSION['userid']);
+    $checkStmt->execute();
+    $result = $checkStmt->get_result();
+
+    if ($result->num_rows === 0) {
+        throw new Exception("Quote not found or cannot be accepted in current status");
+    }
+
+    // 更新狀態為 accepted
     $sql = "UPDATE insurance_requests 
-            SET status = 'completed' 
+            SET status = 'accepted' 
             WHERE insuranceID = ? AND customer_ID = ?";
             
     $stmt = $conn->prepare($sql);
@@ -33,10 +45,6 @@ try {
 
     if (!$stmt->execute()) {
         throw new Exception("Failed to accept quote");
-    }
-
-    if ($stmt->affected_rows === 0) {
-        throw new Exception("Quote not found or not authorized");
     }
 
     echo json_encode([
@@ -51,6 +59,7 @@ try {
         'error' => $e->getMessage()
     ]);
 } finally {
+    if (isset($checkStmt)) $checkStmt->close();
     if (isset($stmt)) $stmt->close();
     if (isset($conn)) $conn->close();
 }
