@@ -1,69 +1,76 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// 檢查登入狀態
-if (!isset($_SESSION['userid'])) {
-    echo json_encode(["success" => false, "message" => "Please login first"]);
+error_log('Session data in submitData: ' . print_r($_SESSION, true));
+
+// 改用 user_id
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
+    echo json_encode([
+        "success" => false,
+        "message" => "Please login first"
+    ]);
     exit;
 }
 
-// 讀取POST數據
+
 $data = json_decode(file_get_contents('php://input'), true);
 
 if ($data) {
-    $customer_ID = $_SESSION['userid']; // 使用session中的用戶ID
+    $customer_ID = $_SESSION['user_id'];  // 使用 user_id
     
-    // 從請求中獲取數據
-    $name = $data['name'];
-    $phone = $data['phone'];
-    $email = $data['email'];
-    $driverAge = $data['driverAge'];
-    $driverOccupation = $data['driverOccupation'];
-    $vehicleYear = $data['vehicleYear'];
-    $cc = $data['cc'];
-    $vehicleModel = $data['vehicleModel'];
+    try {
+        $conn = new mysqli("localhost", "root", "", "ins");
+        $conn->set_charset("utf8mb4");
 
-    // 資料庫連接設置
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "ins";
+        if ($conn->connect_error) {
+            throw new Exception("Connection failed: " . $conn->connect_error);
+        }
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+        $stmt = $conn->prepare("INSERT INTO insurance_requests (
+            customer_ID, name, phone, email, driver_age, 
+            driver_occupation, vehicle_year, cc, vehicle_model, 
+            status, request_date
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
+        
+        $stmt->bind_param("issssssss", 
+            $customer_ID,
+            $data['name'],
+            $data['phone'],
+            $data['email'],
+            $data['driverAge'],
+            $data['driverOccupation'],
+            $data['vehicleYear'],
+            $data['cc'],
+            $data['vehicleModel']
+        );
 
-    if ($conn->connect_error) {
-        echo json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]);
-        exit();
-    }
+        if ($stmt->execute()) {
+            echo json_encode([
+                "success" => true,
+                "message" => "Application submitted successfully"
+            ]);
+        } else {
+            throw new Exception("Error executing query: " . $stmt->error);
+        }
 
-    // 插入數據，包含customer_ID和request狀態
-    $stmt = $conn->prepare("INSERT INTO insurance_requests (
-        customer_ID, name, phone, email, driver_age, 
-        driver_occupation, vehicle_year, cc, vehicle_model, 
-        status, request_date
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
-    
-    $stmt->bind_param("sssssssss", 
-        $customer_ID, $name, $phone, $email, $driverAge, 
-        $driverOccupation, $vehicleYear, $cc, $vehicleModel
-    );
-
-    if ($stmt->execute()) {
+    } catch (Exception $e) {
+        error_log("Error in submitData.php: " . $e->getMessage());
         echo json_encode([
-            "success" => true, 
-            "message" => "Application submitted successfully"
-        ]); 
-    } else {
-        echo json_encode([
-            "success" => false, 
-            "message" => "Error: " . $stmt->error
+            "success" => false,
+            "message" => "An error occurred while processing your request"
         ]);
+    } finally {
+        if (isset($stmt)) $stmt->close();
+        if (isset($conn)) $conn->close();
     }
-
-    $stmt->close();
-    $conn->close();
 } else {
-    echo json_encode(["success" => false, "message" => "Invalid data"]);
+    echo json_encode([
+        "success" => false,
+        "message" => "Invalid data received"
+    ]);
 }
 ?>

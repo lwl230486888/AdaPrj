@@ -20,16 +20,22 @@
 
     <?php
     session_start();
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-    // 檢查登入狀態
-    $isLoggedIn = isset($_SESSION['userid']);
+    // Debug log
+    error_log('Session data in InsuranceHomePage: ' . print_r($_SESSION, true));
+
+    // 改用 user_id 來檢查登入狀態
+    $userLoggedIn = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
     $userData = null;
 
-    if ($isLoggedIn) {
+    if ($userLoggedIn) {
         $userData = [
-            'userid' => $_SESSION['userid'],
+            'userid' => $_SESSION['user_id'],  // 使用 user_id
             'name' => $_SESSION['name'],
-            'email' => $_SESSION['email']
+            'email' => $_SESSION['email'],
+            'role' => $_SESSION['role']
         ];
     }
 
@@ -216,25 +222,67 @@
     <footer>
         <p>Contact Information | Social Media Links | Privacy Policy | Terms of Use</p>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            initAuthCheck();
 
-            // 如果需要立即獲取用戶狀態
-            checkLoginStatus().then(result => {
-                if (!result.isLoggedIn) {
-                    // 處理未登入情況
-                    console.log('User not logged in');
-                    // 可以在這裡添加相應的處理邏輯
-                } else {
-                    // 處理已登入情況
-                    console.log('User logged in:', result.userData);
-                    // 可以在這裡添加相應的處理邏輯
-                }
-            });
+    <script>
+        // 確保 DOM 載入完成後再載入主要腳本
+        document.addEventListener('DOMContentLoaded', function () {
+            // 先檢查登入狀態
+            if (!window.userLoggedIn) {
+                handleLoginCheck()
+                    .then(data => {
+                        if (data.isLoggedIn) {
+                            // 載入主要腳本
+                            const script = document.createElement('script');
+                            script.src = './script.js';
+                            document.body.appendChild(script);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error checking login status. Please try again.');
+                    });
+            } else {
+                // 直接載入主要腳本
+                const script = document.createElement('script');
+                script.src = './script.js';
+                document.body.appendChild(script);
+            }
         });
+
+        // 定義全局函數處理登入檢查
+        function handleLoginCheck() {
+            console.log('Checking login status...');
+            return fetch('check_login_status.php', {
+                credentials: 'include',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    console.log('Login check response:', response);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Login check data:', data);
+                    if (!data.isLoggedIn) {
+                        window.location.href = 'loginPage.html';
+                    }
+                    return data;
+                })
+                .catch(error => {
+                    console.error('Login check error:', error);
+                    throw error;
+                });
+        }
+
+        console.log('Session data:', <?php echo json_encode($_SESSION); ?>);
+        window.userLoggedIn = <?php echo json_encode($userLoggedIn); ?>;
+        window.userData = <?php echo json_encode($userData); ?>;
     </script>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
